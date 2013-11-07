@@ -68,8 +68,7 @@ FLTK_SOURCE=$(FLTK_NAME)-$(FLTK_VERSION)
 
 PKGROOT=/opt/vmd
 
-#build: $(SRC_DIRS)
-build:
+build: $(SRC_DIRS)
 	(\
             . /etc/profile.d/modules.sh; \
 	    module load cmake; \
