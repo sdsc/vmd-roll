@@ -16,7 +16,6 @@ my $output;
 # vmd-common.xml
 if($appliance =~ /$installedOnAppliancesPattern/) {
   ok($isInstalled, 'vmd installed');
-  ok(-d "/opt/vmd", "vmd installed");
 } else {
   ok(! $isInstalled, 'vmd not installed');
 }
