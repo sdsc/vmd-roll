@@ -68,7 +68,8 @@ FLTK_SOURCE=$(FLTK_NAME)-$(FLTK_VERSION)
 
 PKGROOT=/opt/vmd
 
-build: $(SRC_DIRS)
+#build: $(SRC_DIRS)
+build:
 	(\
             . /etc/profile.d/modules.sh; \
 	    module load cmake; \
@@ -126,7 +127,10 @@ install::
 	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	(							\
             cd $(VMD_SOURCE)/src; \
-            make install \
+            make install; \
+            rm -f $(ROOT)/$(PKGROOT)/lib/vmd/plugins; \
+            mkdir $(ROOT)/$(PKGROOT)/lib/vmd/plugins; \
+            cp -r $(REDHAT.ROOT)/src/build-plugins/*  $(ROOT)/$(PKGROOT)/lib/vmd/plugins \
 	)
 	umount $(PKGROOT)
 	cat vmd.module | perl -pi -e "s!INSTALLROOT!$(PKGROOT)!g;s!MODULEROOT!/opt/modulefiles/applications/vmd!g;s!VERSION!$(VERSION)!g" \
@@ -136,3 +140,4 @@ install::
 
 clean::
 	rm -rf $(VMD_SOURCE) $(TACHYON_NAME) plugins $(ACTC_SOURCE) $(FLTK_SOURCE)
+	-umount $(PKGROOT)
