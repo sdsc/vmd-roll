@@ -1,5 +1,3 @@
-# $Id$
-#
 # @Copyright@
 # 
 # 				Rocks(r)
