@@ -1,25 +1,7 @@
 # vmd package README
 
-This directoy contains the build files for the vmd package, which is part
-of the vmd roll. Unique to the vmd roll/package is the bundled 
-capability to download & size/checksum verify binaries that are used to build
-the package/roll from a controlled server.
+The VMD package (for this particular configuration) requires 3 other codes :
 
-To allow this process to complete you simply need to add the size, git hash 
-and binary filename to a file in this directory. The default name for that
-file is `binary_hashes` but it can be changed in `pull.mk` if you wish. To 
-generate the proper content execute the following command(s) or script their
-equivalent...
-
-	BINARY_FILE=<name_of_your_file>
-	echo `ls -l ${BINARY_FILE} | awk '{print $5}'` \
-	     "  " \
-	     `git hash-object -t blob ${BINARY_FILE}` \
-	     "  " \
-	     `basename ${BINARY_FILE}` > binary_hashes
-
-Then upload your `${BINARY_FILE}` to the server listed in the `pull.mk` file
-into the web accessible directory...
-
-	$(DL.SERVER)/$(DL.PATH)
-
+1) tachyon: a ray tracing library (http://jedi.ks.uiuc.edu/~johns/raytracer)
+2) actc :  turns independent triangles into strips and fans ( http://sourceforge.net/projects/actc )
+3) fltk: (fast light tool kit (www.fltk.org), a library that provides GUI functionality 
