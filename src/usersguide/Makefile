@@ -1,4 +1,3 @@
-#
 # $Id$
 #
 # @Copyright@
@@ -56,15 +55,34 @@
 # @Copyright@
 #
 # $Log$
-#
 
--include $(ROLLSROOT)/etc/Rolls.mk
-include Rolls.mk
+PKGROOT         = /var/www/html/roll-documentation/vmd/$(VERSION)
+REDHAT.ROOT     = $(PWD)/../../
+-include $(ROCKSROOT)/etc/Rules.mk
+include Rules.mk
 
-default: roll
+default: $(NAME).spec ../$(NAME)-$(VERSION).tar.gz
+
+html: predoc
+	jw --backend html --dsl $(PWD)/rocks.dsl#html index.sgml 
+
+pdf: predoc
+	jw --backend pdf --dsl $(PWD)/rocks.dsl#print index.sgml
+
+build: html pdf
+
+install:: build
+	mkdir -p $(ROOT)/$(PKGROOT)/images
+	mkdir -p $(ROOT)/$(PKGROOT)/stylesheet-images
+	install -ma+r index.pdf 	$(ROOT)/$(PKGROOT)/$(NAME).pdf
+	install -ma+r *.html    	$(ROOT)/$(PKGROOT)/
+	install -ma+r images/*.png	$(ROOT)/$(PKGROOT)/images/
+	install -ma+r stylesheet-images/{*.gif,*.png} \
+		$(ROOT)/$(PKGROOT)/stylesheet-images/
+	install -ma+r rocks.css $(ROOT)/$(PKGROOT)/
+
+clean::
+	rm -f *.html
+	rm -f index.pdf
 
 
-distclean:: clean
-	-rm -f _arch build.log
-	-rm -rf RPMS SRPMS
-	-rm -fr src/build-*
