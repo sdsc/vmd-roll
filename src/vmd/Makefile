@@ -129,7 +129,6 @@ install::
             mkdir $(ROOT)/$(PKGROOT)/lib/vmd/plugins; \
             cp -r $(REDHAT.ROOT)/src/build-plugins/*  $(ROOT)/$(PKGROOT)/lib/vmd/plugins \
 	)
-	umount $(PKGROOT)
 	cat vmd.module | perl -pi -e "s!INSTALLROOT!$(PKGROOT)!g;s!MODULEROOT!/opt/modulefiles/applications/vmd!g;s!VERSION!$(VERSION)!g" \
           > $(REDHAT.ROOT)/src/build-vmd-modules/$(NAME).module; \
 
