@@ -76,10 +76,6 @@ build: $(SRC_DIRS)
             export PYTHON_INCLUDE_DIR=/opt/python/include/python2.7; \
             export PYTHON_LIBRARY_DIR=/opt/python/lib; \
             export NUMPY_INCLUDE_DIR=/opt/scipy/lib/python2.7/site-packages/numpy/core/include; \
-            tar xvzf $(VMD_SOURCE).tar.gz; \
-            tar xvzf $(TACHYON_SOURCE).tar.gz; \
-            tar xvzf $(ACTC_SOURCE).tar.gz; \
-            tar xvzf $(FLTK_SOURCE).tar.gz; \
             cp patch-files/Makefile $(VMD_SOURCE); \
             cd $(TACHYON_NAME)/unix; \
             make linux-icc-thr-ogl; \
