@@ -77,7 +77,6 @@ build: $(SRC_DIRS)
             export PYTHON_LIBRARY_DIR=/opt/python/lib; \
             export NUMPY_INCLUDE_DIR=/opt/scipy/lib/python2.7/site-packages/numpy/core/include; \
             patch $(VMD_SOURCE)/Makefile patch-files/Makefile.patch; \
-            patch $(VMD_SOURCER)/configure patch-files/configure.patch; \
             patch $(FLTK_SOURCE)/Makefile patch-files/Makefile.fltk.patch; \
             patch plugins/Make-arch patch-files/Make-arch.patch; \
             cd $(TACHYON_NAME)/unix; \
@@ -103,6 +102,7 @@ build: $(SRC_DIRS)
             make distrib; \
             cd ../$(VMD_SOURCE); \
             ln -s $(REDHAT.ROOT)/src/build-plugins  plugins; \
+            patch configure $(REDHAT.ROOT)/src/vmd/patch-files/configure.patch; \
 	    perl -pi -e "s!ROLLNETCDF!$${NETCDFHOME}!" configure; \
             make linux.amd64.opengl; \
             cp ../$(TACHYON_NAME)/src/*.h lib/$(TACHYON_NAME)/include;\
