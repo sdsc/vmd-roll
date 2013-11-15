@@ -1,0 +1,11 @@
+--- fltk-1.3.2/Makefile	2011-07-18 21:49:30.000000000 -0700
++++ patch-files/Makefile.fltk	2013-11-07 10:31:56.327056922 -0800
+@@ -95,7 +95,7 @@ makeinclude: configure configh.in makein
+ 		./config.status --recheck; \
+ 		./config.status; \
+ 	else \
+-		./configure; \
++		./configure --prefix=ROLLINSTALL; \
+ 	fi
+ 	touch config.h
+ 	chmod +x fltk-config

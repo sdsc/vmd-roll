@@ -1,0 +1,50 @@
+--- vmd-1.9.1/configure	2012-02-01 23:53:54.000000000 -0800
++++ patch-files/configure	2013-11-07 10:31:56.331057096 -0800
+@@ -577,7 +577,7 @@ $fltkopengl_defines     = "-DVMDOPENGL -
+ $fltk_defines     = "-DVMDGUI -DVMDFLTK";
+ $fltk_dir         = "$vmd_library_dir/fltk";
+ $fltk_include     = "-I$fltk_dir/include";
+-$fltk_library     = "-L$fltk_dir/$config_arch";
++$fltk_library     = "-L$fltk_dir/lib";
+ $fltk_libs        = "-lfltk -lX11";
+ #@fltk_cc          = ('forms_ui.c');
+ @fltk_cu          = ();
+@@ -789,7 +789,7 @@ $tdconnexion_libs        = "";
+ $libtachyon_defines     = "-DVMDLIBTACHYON";
+ $libtachyon_dir         = "$vmd_library_dir/tachyon";
+ $libtachyon_include     = "-I$libtachyon_dir/include";
+-$libtachyon_library     = "-L$libtachyon_dir/lib_$config_arch";
++$libtachyon_library     = "-L$libtachyon_dir/lib";
+ $libtachyon_libs        = "-ltachyon";
+ @libtachyon_cc          = ();
+ @libtachyon_cu          = ();
+@@ -942,7 +942,7 @@ if (($config_arch eq "LINUX") || ($confi
+ $actc_defines     = "-DVMDACTC";
+ $actc_dir         = "$vmd_library_dir/actc";
+ $actc_include     = "-I$actc_dir/include";
+-$actc_library     = "-L$actc_dir/lib_$config_arch";
++$actc_library     = "-L$actc_dir/lib";
+ $actc_libs        = "-lactc";
+ @actc_cc          = ();
+ @actc_cu          = ();
+@@ -1019,9 +1019,9 @@ $mpi_libs        = "-L/usr/mpi/gcc/mvapi
+ # OPTIONAL COMPONENT: NetCDF I/O Library (Used by cdfplugin)
+ #######################
+ $netcdf_defines     = "";
+-$netcdf_dir         = "$vmd_library_dir/netcdf";
++$netcdf_dir         = "ROLLNETCDF";
+ $netcdf_include     = "-I$netcdf_dir/include";
+-$netcdf_library     = "-L$netcdf_dir/lib_$config_arch";
++$netcdf_library     = "-L$netcdf_dir/lib";
+ $netcdf_libs        = "-lnetcdf";
+ @netcdf_cc          = ();
+ @netcdf_cu          = ();
+@@ -1101,7 +1101,7 @@ $stock_numpy_library_dir=$ENV{"NUMPY_LIB
+ $python_defines     = "-DVMDPYTHON";
+ $python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
+ $python_library     = "-L$stock_python_library_dir";
+-$python_libs        = "-lpython2.5 -lpthread";
++$python_libs        = "-lpython2.7 -lpthread";
+ @python_h           = ('PythonTextInterp.h',
+                        'VMDTkinterMenu.h',
+ 		       'py_commands.h',
