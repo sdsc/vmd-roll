@@ -76,7 +76,10 @@ build: $(SRC_DIRS)
             export PYTHON_INCLUDE_DIR=/opt/python/include/python2.7; \
             export PYTHON_LIBRARY_DIR=/opt/python/lib; \
             export NUMPY_INCLUDE_DIR=/opt/scipy/lib/python2.7/site-packages/numpy/core/include; \
-            cp patch-files/Makefile $(VMD_SOURCE); \
+            patch $(VMD_SOURCE)/Makefile patch-files/Makefile.patch; \
+            patch $(VMD_SOURCER)/configure patch-files/configure.patch; \
+            patch $(FLTK_SOURCE)/Makefile patch-files/Makefile.fltk.patch; \
+            patch plugins/Make-arch patch-files/Make-arch.patch; \
             cd $(TACHYON_NAME)/unix; \
             make linux-icc-thr-ogl; \
             mkdir -p ../../$(VMD_SOURCE)/lib/$(TACHYON_NAME)/lib;\
@@ -90,19 +93,16 @@ build: $(SRC_DIRS)
             cp *.a  ../$(VMD_SOURCE)/lib/actc/lib; \
             cp *.h  ../$(VMD_SOURCE)/lib/actc/include; \
             cd ../$(FLTK_SOURCE); \
-            cp ../patch-files/Makefile.fltk Makefile; \
-	    perl -pi -e "s!ROLLINSTALL!$(CURDIR)/$(VMD_SOURCE)/lib/fltk!" Makefile; \
+            perl -pi -e "s!ROLLINSTALL!$(CURDIR)/$(VMD_SOURCE)/lib/fltk!" Makefile; \
             make; \
             make install; \
             cd ../$(VMD_SOURCE);\
             cd ../plugins; \
-            cp ../patch-files/Make-arch .; \
             export PLUGINDIR=$(REDHAT.ROOT)/src/build-plugins; \
             make LINUXAMD64; \
             make distrib; \
             cd ../$(VMD_SOURCE); \
             ln -s $(REDHAT.ROOT)/src/build-plugins  plugins; \
-            cp ../patch-files/configure .; \
 	    perl -pi -e "s!ROLLNETCDF!$${NETCDFHOME}!" configure; \
             make linux.amd64.opengl; \
             cp ../$(TACHYON_NAME)/src/*.h lib/$(TACHYON_NAME)/include;\
