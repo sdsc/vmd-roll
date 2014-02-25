@@ -70,8 +70,9 @@ build: $(SRC_DIRS)
 	(\
             . /etc/profile.d/modules.sh; \
 	    module load cmake; \
-            module load python; \
             module load scipy; \
+            module load intel; \
+            module load mvapich2_ib; \
             module load netcdf; \
             export PYTHON_INCLUDE_DIR=/opt/python/include/python2.7; \
             export PYTHON_LIBRARY_DIR=/opt/python/lib; \
@@ -108,7 +109,17 @@ build: $(SRC_DIRS)
             cp ../$(TACHYON_NAME)/src/*.h lib/$(TACHYON_NAME)/include;\
             cd src; \
 	    perl -pi -e "s!/usr/local/bin/gzip!/bin/gzip!" Makefile; \
-	    perl -pi -e "s!/usr/local!$(PKGROOT)!g" Makefile; \
+	    perl -pi -e "s!/usr/local!$(PKGROOT)!g" Makefile \
+        )
+	sed 's/\(LOADLIBES   = .*\)/\1 \/usr\/lib64\/libXext.so.6 \/usr\/lib64\/libXft.so.2 \/usr\/lib64\/libfontconfig.so.1/' $(VMD_SOURCE)/src/Makefile >.tmp; \
+	mv .tmp $(VMD_SOURCE)/src/Makefile
+	( \
+            . /etc/profile.d/modules.sh; \
+            module load scipy; \
+            module load intel; \
+            module load mvapich2_ib; \
+            module load netcdf; \
+            cd $(VMD_SOURCE)/src; \
             make \
 	)
 	@echo "::: Package $(NAME) build complete :::"
