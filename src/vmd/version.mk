@@ -2,6 +2,8 @@ NAME    = vmd
 VERSION = 1.9.1
 RELEASE = 0
 
+RPM.EXTRAS = "AutoReq: no"
+
 SRC_SUBDIR	= vmd
 
 VMD_NAME	= vmd
