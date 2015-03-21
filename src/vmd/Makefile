@@ -79,7 +79,7 @@ DESCRIPTION:
 ADDED_LIBS = actc tachyon fltk
 
 LICENSE: $(SRC_DIRS)
-	for F in $(ADDED_MODULES); do \
+	for F in $(ADDED_LIBS); do \
           cp $$F*/PKG-INFO $(SOURCE_DIR)/$$F-PKG-INFO; \
         done
 	$(CHECK_LICENSE_FILES)
