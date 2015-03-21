@@ -17,7 +17,6 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 <package>vmd</package>
 <package>vmd-modules</package>
 <package>vmd-roll-test</package>
-<package>roll-vmd-usersguide</package>
 
 <post>
 

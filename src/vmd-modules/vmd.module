@@ -1,0 +1,9 @@
+#%Module1.0
+module-whatis "vmd"
+module-whatis "Version: VERSION"
+setenv VMDHOME /opt/vmd
+module load ROLLCOMPILER ROLLMPI
+module load python
+module load netcdf
+prepend-path PATH /opt/vmd/bin 
+

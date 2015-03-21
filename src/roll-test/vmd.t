@@ -33,6 +33,6 @@ SKIP: {
 }
 
 SKIP: {
-  $out=`. /etc/profile.d/modules.sh; module load python netcdf; /opt/vmd/bin/vmd --help  2>&1`;
+  $out=`. /etc/profile.d/modules.sh; module load vmd; vmd --help  2>&1`;
   ok($out =~ /VMD for LINUXAMD64,/, 'vmd executable works');
 }

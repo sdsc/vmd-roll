@@ -58,89 +58,112 @@ REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
-include pull.mk
-VMD_SOURCE=$(VMD_NAME)-$(VMD_VERSION)
-TACHYON_SOURCE=$(TACHYON_NAME)-$(TACHYON_VERSION)
-ACTC_SOURCE=$(ACTC_NAME)-$(ACTC_VERSION)
-FLTK_SOURCE=$(FLTK_NAME)-$(FLTK_VERSION)
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
 
-PKGROOT=/opt/vmd
+ROLLCOMPILER=intel
+ROLLMPI=mvapich2_ib
+
+
+$(NAME).spec: DESCRIPTION LICENSE
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+        ( \
+          $(DESCRIBE_PKG); \
+          $(DESCRIBE_CC); \
+          $(DESCRIBE_MPI); \
+          $(DESCRIBE_PYTHON) \
+          $(DESCRIBE_NETCDF) \
+        ) > $@
+
+ADDED_LIBS = actc tachyon fltk
+
+LICENSE: $(SRC_DIRS)
+	for F in $(ADDED_MODULES); do \
+          cp $$F*/PKG-INFO $(SOURCE_DIR)/$$F-PKG-INFO; \
+        done
+	$(CHECK_LICENSE_FILES)
+	echo University of Illinois > $@
 
 build: $(SRC_DIRS)
 	(\
-            . /etc/profile.d/modules.sh; \
-	    module load cmake; \
-            module load scipy; \
-            module load intel; \
-            module load mvapich2_ib; \
-            module load netcdf; \
+	    $(MODULE_LOAD_CMAKE); \
+            $(MODULE_LOAD_PYTHON); \
+            $(MODULE_LOAD_CC); \
+            $(MODULE_LOAD_MPI); \
+            $(MODULE_LOAD_NETCDF); \
             export PYTHON_INCLUDE_DIR=/opt/python/include/python2.7; \
             export PYTHON_LIBRARY_DIR=/opt/python/lib; \
-            export NUMPY_INCLUDE_DIR=/opt/scipy/lib/python2.7/site-packages/numpy/core/include; \
-            patch $(VMD_SOURCE)/Makefile patch-files/Makefile.patch; \
-            patch $(FLTK_SOURCE)/Makefile patch-files/Makefile.fltk.patch; \
+            export NUMPY_INCLUDE_DIR=/opt/python/lib/python2.7/site-packages/numpy/core/include; \
+            patch $(SOURCE_DIR)/Makefile patch-files/Makefile.patch; \
+            patch $(FLTK_DIR)/Makefile patch-files/Makefile.fltk.patch; \
             patch plugins/Make-arch patch-files/Make-arch.patch; \
-            cd $(TACHYON_NAME)/unix; \
+            export CC=$(CC); \
+            cd $(TACHYON_DIR)/unix; \
             make linux-icc-thr-ogl; \
-            mkdir -p ../../$(VMD_SOURCE)/lib/$(TACHYON_NAME)/lib;\
-            mkdir ../../$(VMD_SOURCE)/lib/$(TACHYON_NAME)/include;\
-            cp ../compile/linux-icc-thr-ogl/libtachyon.a ../../$(VMD_SOURCE)/lib/$(TACHYON_NAME)/lib;\
-            cd ../../$(ACTC_SOURCE); \
-            export CC=icc; \
+            mkdir -p ../../$(SOURCE_DIR)/lib/$(TACHYON_NAME)/lib;\
+            mkdir ../../$(SOURCE_DIR)/lib/$(TACHYON_NAME)/include;\
+            cp ../compile/linux-icc-thr-ogl/libtachyon.a ../../$(SOURCE_DIR)/lib/$(TACHYON_NAME)/lib;\
+            cd ../../$(ACTC_DIR); \
             make; \
-            mkdir -p ../$(VMD_SOURCE)/lib/actc/lib; \
-            mkdir ../$(VMD_SOURCE)/lib/actc/include; \
-            cp *.a  ../$(VMD_SOURCE)/lib/actc/lib; \
-            cp *.h  ../$(VMD_SOURCE)/lib/actc/include; \
-            cd ../$(FLTK_SOURCE); \
-            perl -pi -e "s!ROLLINSTALL!$(CURDIR)/$(VMD_SOURCE)/lib/fltk!" Makefile; \
+            mkdir -p ../$(SOURCE_DIR)/lib/actc/lib; \
+            mkdir ../$(SOURCE_DIR)/lib/actc/include; \
+            cp *.a  ../$(SOURCE_DIR)/lib/actc/lib; \
+            cp *.h  ../$(SOURCE_DIR)/lib/actc/include; \
+            cd ../$(FLTK_DIR); \
+            perl -pi -e "s!ROLLINSTALL!$(CURDIR)/$(SOURCE_DIR)/lib/fltk!" Makefile; \
+            LIBSTMP=$${LIBS}; \
+            export LIBS="-ldl -fPIC"; \
             make; \
             make install; \
-            cd ../$(VMD_SOURCE);\
+            export LIBS=$${LIBSTMP}; \
+            cd ../$(SOURCE_DIR);\
             cd ../plugins; \
+	    perl -pi -e "s!ROLLNETCDF!$${NETCDFHOME}!" Make-arch; \
+	    perl -pi -e "s!ROLLCC!$(CC)!" Make-arch; \
+	    perl -pi -e "s!ROLLCXX!$(CXX)!" Make-arch; \
             export PLUGINDIR=$(REDHAT.ROOT)/src/build-plugins; \
             make LINUXAMD64; \
             make distrib; \
-            cd ../$(VMD_SOURCE); \
+            cd ../$(SOURCE_DIR); \
             ln -s $(REDHAT.ROOT)/src/build-plugins  plugins; \
             patch configure $(REDHAT.ROOT)/src/vmd/patch-files/configure.patch; \
 	    perl -pi -e "s!ROLLNETCDF!$${NETCDFHOME}!" configure; \
+	    perl -pi -e "s!ROLLMPI!$${MPIHOME}!" configure; \
             make linux.amd64.opengl; \
             cp ../$(TACHYON_NAME)/src/*.h lib/$(TACHYON_NAME)/include;\
             cd src; \
 	    perl -pi -e "s!/usr/local/bin/gzip!/bin/gzip!" Makefile; \
 	    perl -pi -e "s!/usr/local!$(PKGROOT)!g" Makefile \
         )
-	sed 's/\(LOADLIBES   = .*\)/\1 \/usr\/lib64\/libXext.so.6 \/usr\/lib64\/libXft.so.2 \/usr\/lib64\/libfontconfig.so.1/' $(VMD_SOURCE)/src/Makefile >.tmp; \
-	mv .tmp $(VMD_SOURCE)/src/Makefile
+	sed 's/\(LOADLIBES   = .*\)/\1 \/usr\/lib64\/libXext.so.6 \/usr\/lib64\/libXft.so.2 \/usr\/lib64\/libfontconfig.so.1/' $(SOURCE_DIR)/src/Makefile >.tmp; \
+	mv .tmp $(SOURCE_DIR)/src/Makefile
 	( \
-            . /etc/profile.d/modules.sh; \
-            module load scipy; \
-            module load intel; \
-            module load mvapich2_ib; \
-            module load netcdf; \
-            cd $(VMD_SOURCE)/src; \
+	    $(MODULE_LOAD_CMAKE); \
+            $(MODULE_LOAD_PYTHON); \
+            $(MODULE_LOAD_CC); \
+            $(MODULE_LOAD_MPI); \
+            $(MODULE_LOAD_NETCDF); \
+            cd $(SOURCE_DIR)/src; \
             make \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
-	mkdir -p $(PKGROOT)
 	mkdir -p $(REDHAT.ROOT)/src/build-vmd-modules
-	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
+	$(PKGROOT_BIND_MOUNT)
 	(							\
-            cd $(VMD_SOURCE)/src; \
+            cd $(SOURCE_DIR)/src; \
             make install; \
             rm -f $(ROOT)/$(PKGROOT)/lib/vmd/plugins; \
             mkdir $(ROOT)/$(PKGROOT)/lib/vmd/plugins; \
             cp -r $(REDHAT.ROOT)/src/build-plugins/*  $(ROOT)/$(PKGROOT)/lib/vmd/plugins \
 	)
-	cat vmd.module | perl -pi -e "s!INSTALLROOT!$(PKGROOT)!g;s!MODULEROOT!/opt/modulefiles/applications/vmd!g;s!VERSION!$(VERSION)!g" \
-          > $(REDHAT.ROOT)/src/build-vmd-modules/$(NAME).module; \
+	$(PKGROOT_BIND_UMOUNT)
+	$(INSTALL_LICENSE_FILES)
 
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(VMD_SOURCE) $(TACHYON_NAME) plugins $(ACTC_SOURCE) $(FLTK_SOURCE)
-	-umount $(PKGROOT)
+	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) plugins _arch DESCRIPTION LICENSE

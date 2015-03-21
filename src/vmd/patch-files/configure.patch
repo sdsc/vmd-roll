@@ -1,6 +1,6 @@
---- vmd-1.9.1/configure	2012-02-01 23:53:54.000000000 -0800
-+++ patch-files/configure	2013-11-07 10:31:56.331057096 -0800
-@@ -577,7 +577,7 @@ $fltkopengl_defines     = "-DVMDOPENGL -
+--- vmd-1.9.2/configure	2014-12-29 21:47:59.000000000 -0800
++++ patch-files/configure	2015-03-20 16:56:24.093812886 -0700
+@@ -621,7 +621,7 @@
  $fltk_defines     = "-DVMDGUI -DVMDFLTK";
  $fltk_dir         = "$vmd_library_dir/fltk";
  $fltk_include     = "-I$fltk_dir/include";
@@ -9,7 +9,7 @@
  $fltk_libs        = "-lfltk -lX11";
  #@fltk_cc          = ('forms_ui.c');
  @fltk_cu          = ();
-@@ -789,7 +789,7 @@ $tdconnexion_libs        = "";
+@@ -953,7 +953,7 @@
  $libtachyon_defines     = "-DVMDLIBTACHYON";
  $libtachyon_dir         = "$vmd_library_dir/tachyon";
  $libtachyon_include     = "-I$libtachyon_dir/include";
@@ -18,7 +18,7 @@
  $libtachyon_libs        = "-ltachyon";
  @libtachyon_cc          = ();
  @libtachyon_cu          = ();
-@@ -942,7 +942,7 @@ if (($config_arch eq "LINUX") || ($confi
+@@ -1142,7 +1142,7 @@
  $actc_defines     = "-DVMDACTC";
  $actc_dir         = "$vmd_library_dir/actc";
  $actc_include     = "-I$actc_dir/include";
@@ -27,7 +27,7 @@
  $actc_libs        = "-lactc";
  @actc_cc          = ();
  @actc_cu          = ();
-@@ -1019,9 +1019,9 @@ $mpi_libs        = "-L/usr/mpi/gcc/mvapi
+@@ -1155,9 +1155,9 @@
  # OPTIONAL COMPONENT: NetCDF I/O Library (Used by cdfplugin)
  #######################
  $netcdf_defines     = "";
@@ -39,7 +39,7 @@
  $netcdf_libs        = "-lnetcdf";
  @netcdf_cc          = ();
  @netcdf_cu          = ();
-@@ -1101,7 +1101,7 @@ $stock_numpy_library_dir=$ENV{"NUMPY_LIB
+@@ -1237,7 +1237,7 @@
  $python_defines     = "-DVMDPYTHON";
  $python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
  $python_library     = "-L$stock_python_library_dir";
@@ -48,3 +48,12 @@
  @python_h           = ('PythonTextInterp.h',
                         'VMDTkinterMenu.h',
  		       'py_commands.h',
+@@ -2254,7 +2254,7 @@
+ 
+     # this is to make tcl happy
+     # also needed for plugins
+-    $system_libs .= " -ldl";
++    $system_libs .= " -ldl -lXfixes -lXcursor";
+ 
+     if ($config_python) {
+       # this is to make python happy
