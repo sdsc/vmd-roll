@@ -92,9 +92,9 @@ build: $(SRC_DIRS)
             $(MODULE_LOAD_CC); \
             $(MODULE_LOAD_MPI); \
             $(MODULE_LOAD_NETCDF); \
-            export PYTHON_INCLUDE_DIR=/opt/python/include/python2.7; \
-            export PYTHON_LIBRARY_DIR=/opt/python/lib; \
-            export NUMPY_INCLUDE_DIR=/opt/python/lib/python2.7/site-packages/numpy/core/include; \
+            export PYTHON_INCLUDE_DIR=$${PYTHONHOME}/include/python2.7; \
+            export PYTHON_LIBRARY_DIR=$${PYTHONHOME}/lib; \
+            export NUMPY_INCLUDE_DIR=$${PYTHONHOME}/lib/python2.7/site-packages/numpy/core/include; \
             patch $(SOURCE_DIR)/Makefile patch-files/Makefile.patch; \
             patch $(FLTK_DIR)/Makefile patch-files/Makefile.fltk.patch; \
             patch plugins/Make-arch patch-files/Make-arch.patch; \
