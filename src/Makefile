@@ -51,17 +51,14 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
-# $Log$
 
 -include $(shell $(ROCKSROOT)/bin/arch).mk
 -include $(shell $(ROCKSROOT)/bin/os).mk
 
-default:	pkg
+default:
+	@echo "copyright|rpm|pkg|clean"
 
 copyright rpm pkg clean::
-	for i in $(SRCDIRS) ; do \
-                cd $$i; \
-                $(MAKE) $@ || exit 2 ; \
-                cd ..; \
-        done
+	for i in $(SRCDIRS); do \
+	  (cd $$i && $(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" ROLLPY="$(ROLLPY)" $@) || exit 2; \
+	done

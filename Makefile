@@ -51,17 +51,28 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
-# $Log$
-#
+
+ifndef ROLLCOMPILER
+  ROLLCOMPILER = gnu
+endif
+
+ifndef ROLLMPI
+  ROLLMPI = rocks-openmpi
+endif
+
+ifndef ROLLPY
+  ROLLPY = python
+endif
 
 -include $(ROLLSROOT)/etc/Rolls.mk
 include Rolls.mk
 
-default: roll
+default:
+	$(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" ROLLPY="$(ROLLPY)" roll
 
+clean::
+	rm -f _arch bootstrap.py
 
 distclean:: clean
-	-rm -f _arch build.log
-	-rm -rf RPMS SRPMS
-	-rm -fr src/build-*
+	rm -fr RPMS SRPMS
+	-rm -f build.log
