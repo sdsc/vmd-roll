@@ -1,5 +1,14 @@
 --- vmd-1.9.2/configure	2014-12-29 21:47:59.000000000 -0800
-+++ patch-files/configure	2015-03-20 16:56:24.093812886 -0700
++++ patch-files/configure	2015-08-27 14:43:37.000000000 -0700
+@@ -437,7 +437,7 @@
+ $arch_echo        = "echo";
+ $arch_tar         = "tar";
+ $arch_compress    = "compress";
+-$arch_gnucompress = "/usr/local/bin/gzip";
++$arch_gnucompress = "gzip";
+ $arch_latex       = "latex";
+ $arch_compilerc   = $arch_echo;
+ $arch_rcflags     = "No resource compiler required on this platform.";
 @@ -621,7 +621,7 @@
  $fltk_defines     = "-DVMDGUI -DVMDFLTK";
  $fltk_dir         = "$vmd_library_dir/fltk";

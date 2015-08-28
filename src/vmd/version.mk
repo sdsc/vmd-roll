@@ -8,37 +8,41 @@ ifndef ROLLMPI
 endif
 MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
-PKGROOT=/opt/vmd
+ifndef ROLLPY
+  ROLLPY = python
+endif
 
-NAME    = sdsc-vmd
-VERSION = 1.9.2
-RELEASE = 0
-COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
+NAME            = sdsc-vmd
+VERSION         = 1.9.2
+RELEASE         = 1
+PKGROOT         = /opt/vmd
 
-RPM.EXTRAS = "AutoReq: no"
+SRC_SUBDIR      = vmd
 
-SRC_SUBDIR	= vmd
+SOURCE_NAME     = vmd
+SOURCE_SUFFIX   = tar.gz
+SOURCE_VERSION  = 1.9.2
+SOURCE_PKG      = $(SOURCE_NAME)-$(SOURCE_VERSION).src.$(SOURCE_SUFFIX)
+SOURCE_DIR      = $(SOURCE_NAME)-$(SOURCE_VERSION)
 
-SOURCE_NAME	= vmd
-SOURCE_VERSION	= 1.9.2
-SOURCE_PKG     = $(SOURCE_NAME)-$(SOURCE_VERSION).src.$(SOURCE_SUFFIX)
-SOURCE_DIR     = $(SOURCE_NAME)-$(SOURCE_VERSION)
+ACTC_NAME       = actc
+ACTC_SUFFIX     = tar.gz
+ACTC_VERSION    = 1.1
+ACTC_PKG        = $(ACTC_NAME)-$(ACTC_VERSION).$(ACTC_SUFFIX)
+ACTC_DIR        = $(ACTC_NAME)-$(ACTC_VERSION)
+
+FLTK_NAME       = fltk
+FLTK_SUFFIX     = tar.gz
+FLTK_VERSION    = 1.3.3
+FLTK_PKG        = $(FLTK_NAME)-$(FLTK_VERSION)-source.$(FLTK_SUFFIX)
+FLTK_DIR        = $(FLTK_NAME)-$(FLTK_VERSION)
 
 TACHYON_NAME    = tachyon
+TACHYON_SUFFIX  = tar.gz
 TACHYON_VERSION = 0.99b6
-TACHYON_DIR      = tachyon
+TACHYON_PKG     = $(TACHYON_NAME)-$(TACHYON_VERSION).$(TACHYON_SUFFIX)
+TACHYON_DIR     = $(TACHYON_NAME)
 
-ACTC_NAME    = actc
-ACTC_VERSION = 1.1
-ACTC_DIR =  $(ACTC_NAME)-$(ACTC_VERSION)
+TAR_GZ_PKGS     = $(SOURCE_PKG) $(ACTC_PKG) $(FLTK_PKG) $(TACHYON_PKG)
 
-FLTK_NAME    = fltk
-FLTK_VERSION = 1.3.3
-FLTK_DIR =  $(FLTK_NAME)-$(FLTK_VERSION)
-
-
-# List of *.tar.gz packages that are part of THIS package
-
-TAR_GZ_PKGS = $(SOURCE_NAME)-$(SOURCE_VERSION).src.tar.gz $(TACHYON_NAME)-$(TACHYON_VERSION).tar.gz $(ACTC_NAME)-$(ACTC_VERSION).tar.gz $(FLTK_NAME)-$(FLTK_VERSION)-source.tar.gz
-
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS      = AutoReq:No

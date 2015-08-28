@@ -1,5 +1,5 @@
 --- plugins/Make-arch	2014-08-20 12:54:59.000000000 -0700
-+++ patch-files/Make-arch	2015-03-20 15:27:40.988947838 -0700
++++ patch-files/Make-arch	2015-08-27 15:50:38.000000000 -0700
 @@ -401,15 +401,15 @@
  LINUXAMD64:
  	$(MAKE) dynlibs staticlibs bins \
