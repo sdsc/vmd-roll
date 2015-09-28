@@ -111,9 +111,9 @@ build: $(SRC_DIRS)
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  $(MODULE_LOAD_NETCDF); \
-	  export PYTHON_INCLUDE_DIR=$${PYTHONHOME}/include/python2.7; \
-	  export PYTHON_LIBRARY_DIR=$${PYTHONHOME}/lib; \
-	  export NUMPY_INCLUDE_DIR=$${PYTHONHOME}/lib/python2.7/site-packages/numpy/core/include; \
+	  export PYTHON_INCLUDE_DIR=$${PYTHONROOT}/include/python2.7; \
+	  export PYTHON_LIBRARY_DIR=$${PYTHONROOT}/lib; \
+	  export NUMPY_INCLUDE_DIR=$${PYTHONROOT}/lib/python2.7/site-packages/numpy/core/include; \
 	  export CC=$(CC); \
 	  cd $(TACHYON_DIR)/unix; \
 	  make $(TACHYON_ARCH); \
