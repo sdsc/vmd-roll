@@ -48,12 +48,12 @@ frontend before continuing with installation.
 with installation.
 
 This roll source supports building with different compilers and for different
-MPI flavors.  The `ROLLCOMPILER` and `ROLLMPI` make variables can be used to
-specify the names of compiler and MPI modulefiles to use for building the
+MPI flavors.  The `ROLLCOMPILER` , `ROLLMPI` and `ROLLPY` make variables can be used to
+specify the names of compiler, MPI, and python  modulefiles to use for building the
 software, e.g.,
 
 ```shell
-make ROLLCOMPILER=intel ROLLMPI=mvapich2_ib 2>&1 | tee build.log
+make ROLLCOMPILER=intel ROLLMPI=mvapich2_ib ROLLPY=python 2>&1 | tee build.log
 ```
 
 The build process recognizes "gnu", "intel" or "pgi" as the value for the
