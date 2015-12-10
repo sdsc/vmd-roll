@@ -143,9 +143,10 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/bin
 	$(PKGROOT_BIND_MOUNT)
 	( \
+	  cp $(TACHYON_NAME)/compile/$(TACHYON_ARCH)/tachyon $(ROOT)/$(PKGROOT)/bin; \
 	  cd $(SOURCE_DIR)/src; \
 	  make install \
 	)
