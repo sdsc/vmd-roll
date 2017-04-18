@@ -48,25 +48,18 @@ frontend before continuing with installation.
 with installation.
 
 This roll source supports building with different compilers and for different
-MPI flavors.  The `ROLLCOMPILER` , `ROLLMPI` and `ROLLPY` make variables can be used to
-specify the names of compiler, MPI, and python  modulefiles to use for building the
-software, e.g.,
+MPI flavors and python installations.  The `ROLLCOMPILER`, `ROLLMPI`, and
+`ROLLPY` make variables can be used to specify the names of compiler, MPI, and
+python modulefiles to use for building the software, e.g.,
 
 ```shell
-make ROLLCOMPILER=intel ROLLMPI=mvapich2_ib ROLLPY=python 2>&1 | tee build.log
+make ROLLCOMPILER=intel ROLLMPI=mvapich2_ib ROLLPY=opt-python 2>&1 | tee build.log
 ```
 
 The build process recognizes "gnu", "intel" or "pgi" as the value for the
 `ROLLCOMPILER` variable; any MPI modulefile name may be used as the value of
-the `ROLLMPI` variable.  The default values are "gnu" and "rocks-openmpi".
-
-The roll also supports building with python versions other than the one
-installed by the SDSC python roll.  To use this feature, specify a `ROLLPY`
-make variable with the name of the python modulefile, e.g.,
-
-```shell
-% make ROLLPY=opt-python 2>&1 | tee build.log
-```
+the `ROLLMPI` variable, and any python modulefile name for the ROLLPY variable.
+The default values are "gnu", "rocks-openmpi", and "python".
 
 
 ## Installation
