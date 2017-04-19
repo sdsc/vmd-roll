@@ -142,7 +142,7 @@ build: $(SRC_DIRS)
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
 	  export VMDINSTALLLIBRARYDIR=$(PKGROOT)/lib; \
-	  make linux.mesa; \
+	  make linux.amd64.opengl; \
 	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! if $$_ =~ /^LOADLIBES/' src/Makefile; \
 	  cd src; \
 	  make \
