@@ -1,5 +1,5 @@
 --- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
-+++ patch-files/configure	2017-04-19 13:08:33.921485837 -0700
++++ patch-files/configure	2017-04-19 13:36:10.510008228 -0700
 @@ -459,7 +459,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
@@ -16,7 +16,7 @@
 -$fltk_library     = "-L$fltk_dir/$config_arch";
 -$fltk_libs        = "-lfltk -lX11";
 +$fltk_library     = "-L$fltk_dir/lib";
-+$fltk_libs        = "-lfltk -lX11 -lXfixes";
++$fltk_libs        = "-lfltk -lX11 -lXfixes -lXrender";
  #@fltk_cc          = ('forms_ui.c');
  @fltk_cu          = ();
  @fltk_ccpp        = ( 'ColorFltkMenu.C',
