@@ -101,11 +101,8 @@ build: $(SRC_DIRS)
 	patch $(SOURCE_DIR)/Makefile patch-files/Makefile.patch
 	perl -pi -e 's!ROLLVMDCOMP!$(VMDCOMP)!g' $(SOURCE_DIR)/Makefile
 	perl -pi -e 's!ROLLPKGROOT!$(PKGROOT)!g' $(SOURCE_DIR)/Makefile
-	patch $(FLTK_DIR)/Makefile patch-files/Makefile.fltk.patch
+	patch $(FLTK_DIR)/Makefile patch-files/fltk/Makefile.patch
 	perl -pi -e 's!ROLLINSTALL!$(CURDIR)/$(SOURCE_DIR)/lib/fltk!' $(FLTK_DIR)/Makefile
-	patch plugins/Make-arch patch-files/Make-arch.patch
-	perl -pi -e 's!ROLLCC!$(CC)!' plugins/Make-arch
-	perl -pi -e 's!ROLLCXX!$(CXX)!' plugins/Make-arch
 	patch $(SOURCE_DIR)/configure patch-files/configure.patch
 	mkdir -p $(SOURCE_DIR)/lib/$(TACHYON_NAME)/{include,lib}
 	mkdir -p $(SOURCE_DIR)/lib/actc/{include,lib}
@@ -132,10 +129,6 @@ build: $(SRC_DIRS)
 	  cd ../$(FLTK_DIR); \
 	  make LIBS="-ldl -fPIC"; \
 	  make prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
-	  cd ../plugins; \
-	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
-	  make LINUXAMD64; \
-	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
 	  cd ../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
@@ -160,4 +153,4 @@ install::
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) plugins _arch DESCRIPTION LICENSE
+	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) DESCRIPTION LICENSE
