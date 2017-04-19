@@ -116,10 +116,11 @@ build: $(SRC_DIRS)
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  $(MODULE_LOAD_NETCDF); \
-          version=`python -c "from __future__ import print_function;import sys; print(sys.version[:3])"`; \
- 	  perl -pi -e 's!PYTHON_INCLUDE_DIR!'$${PYTHONROOT}'/include/python'$${version}'!g' $(SOURCE_DIR)/configure; \
+          python_version=`python -c "from __future__ import print_function;import sys; print(sys.version[:3])"`; \
+          numpy_version=`python -c "import numpy; print numpy.__version__"`; \
+ 	  perl -pi -e 's!PYTHON_INCLUDE_DIR!'$${PYTHONROOT}'/include/python'$${python_version}'!g' $(SOURCE_DIR)/configure; \
  	  perl -pi -e 's!PYTHON_LIBRARY_DIR!'$${PYTHONROOT}'/lib!g' $(SOURCE_DIR)/configure; \
- 	  perl -pi -e 's!NUMPY_INCLUDE_DIR!'$${PYTHONROOT}'/lib/python'$${version}'/site-packages/numpy/core/include!g' $(SOURCE_DIR)/configure; \
+ 	  perl -pi -e 's!NUMPY_INCLUDE_DIR!'$${PYTHONROOT}'/lib/python'$${python_version}'/site-packages/numpy-'$${numpy_version}'-py'$${python_version}'-linux-x86_64.egg/numpy/core/include!g' $(SOURCE_DIR)/configure; \
 	  export CC=$(CC); \
 	  cd $(TACHYON_DIR)/unix; \
 	  make $(TACHYON_ARCH); \
