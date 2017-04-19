@@ -61,7 +61,8 @@ REDHAT.ROOT = $(PWD)/../../
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
-ADDED_LIBS = actc tachyon fltk
+ADDED_LIBS_1 = actc tachyon
+ADDED_LIBS_2 = fltk
 
 VMDCOMP = GCC
 ifeq ("$(COMPILERNAME)", "intel")
@@ -87,8 +88,11 @@ DESCRIPTION:
 	) > $@
 
 LICENSE: $(SRC_DIRS)
-	for F in $(ADDED_LIBS); do \
+	for F in $(ADDED_LIBS_1); do \
 	  cp license-files/$$F-PKG-INFO $(SOURCE_DIR)/$$F-PKG-INFO; \
+	done
+	for F in $(ADDED_LIBS_2); do \
+	  cp license-files/$$F-COPYING $(SOURCE_DIR)/$$F-COPYING; \
 	done
 	$(CHECK_LICENSE_FILES)
 	echo University of Illinois > $@
