@@ -1,5 +1,5 @@
 --- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
-+++ patch-files/configure	2017-04-18 17:16:48.554376181 -0700
++++ patch-files/configure	2017-04-19 10:32:42.630425966 -0700
 @@ -459,7 +459,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
@@ -48,11 +48,15 @@
  $netcdf_libs        = "-lnetcdf";
  @netcdf_cc          = ();
  @netcdf_cu          = ();
-@@ -1388,7 +1388,7 @@
+@@ -1386,9 +1386,9 @@
+ $stock_numpy_library_dir=$ENV{"NUMPY_LIBRARY_DIR"} || "$vmd_library_dir/python/lib_$config_arch/lib/python2.5/site-packages/numpy/core/include";
+ 
  $python_defines     = "-DVMDPYTHON";
- $python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
- $python_library     = "-L$stock_python_library_dir";
+-$python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
+-$python_library     = "-L$stock_python_library_dir";
 -$python_libs        = "-lpython2.5 -lpthread";
++$python_include     = "-IPYTHON_INCLUDE_DIR -INUMPY_INCLUDE_DIR";
++$python_library     = "-LPYTHON_LIBRARY_DIR";
 +$python_libs        = "-lpython2.7 -lpthread";
  @python_h           = ('PythonTextInterp.h',
                         'VMDTkinterMenu.h',
