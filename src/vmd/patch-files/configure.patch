@@ -1,5 +1,5 @@
 --- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
-+++ patch-files/configure	2017-04-19 13:45:26.012776954 -0700
++++ patch-files/configure	2017-04-19 15:06:23.995903816 -0700
 @@ -459,7 +459,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
@@ -9,6 +9,15 @@
  $arch_latex       = "latex";
  $arch_compilerc   = $arch_echo;
  $arch_rcflags     = "No resource compiler required on this platform.";
+@@ -585,7 +585,7 @@
+ $mesa_include     = "-I$mesa_dir/include";
+ $mesa_library     = "-L$mesa_dir/lib_$config_arch";
+ #$mesa_libs        = "-lMesaGL -lMesaGLU"; 
+-$mesa_libs        = "-lMesaGL"; 
++$mesa_libs        = "-lGL"; 
+ $mesa_defines     = "-DUSELINEAXES -DVMDMESA -DVMDOPENGL";
+ @mesa_cc          = ();
+ @mesa_cu          = ();
 @@ -668,8 +668,8 @@
  $fltk_defines     = "-DVMDGUI -DVMDFLTK";
  $fltk_dir         = "$vmd_library_dir/fltk";
@@ -72,3 +81,12 @@
  
    if ($config_cuda) {
  #    $arch_nvcc        = "/opt/nvidia/cudatoolkit/default/bin/nvcc";
+@@ -2303,7 +2303,7 @@
+     # they likely serve no useful purpose going forward.
+     if (!$config_opengl_dispatch) {
+       $opengl_dep_libs	= "-L/usr/X11R6/lib64 -lGL -lX11";
+-      $mesa_libs          = "-lMesaGL -L/usr/X11R6/lib64 -lXext -lX11";
++      $mesa_libs          = "-lGL -L/usr/X11R6/lib64 -lXext -lX11";
+     }
+ 
+     # this is to make tcl happy
