@@ -13,15 +13,15 @@ ifndef ROLLPY
 endif
 
 NAME            = sdsc-vmd
-VERSION         = 1.9.2
-RELEASE         = 4
+VERSION         = 1.9.3
+RELEASE         = 0
 PKGROOT         = /opt/vmd
 
 SRC_SUBDIR      = vmd
 
 SOURCE_NAME     = vmd
 SOURCE_SUFFIX   = tar.gz
-SOURCE_VERSION  = 1.9.2
+SOURCE_VERSION  = $(VERSION)
 SOURCE_PKG      = $(SOURCE_NAME)-$(SOURCE_VERSION).src.$(SOURCE_SUFFIX)
 SOURCE_DIR      = $(SOURCE_NAME)-$(SOURCE_VERSION)
 
@@ -33,7 +33,7 @@ ACTC_DIR        = $(ACTC_NAME)-$(ACTC_VERSION)
 
 FLTK_NAME       = fltk
 FLTK_SUFFIX     = tar.gz
-FLTK_VERSION    = 1.3.3
+FLTK_VERSION    = 1.3.4-1
 FLTK_PKG        = $(FLTK_NAME)-$(FLTK_VERSION)-source.$(FLTK_SUFFIX)
 FLTK_DIR        = $(FLTK_NAME)-$(FLTK_VERSION)
 

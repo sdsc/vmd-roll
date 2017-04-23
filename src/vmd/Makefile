@@ -61,7 +61,8 @@ REDHAT.ROOT = $(PWD)/../../
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
-ADDED_LIBS = actc tachyon fltk
+ADDED_LIBS_1 = actc tachyon
+ADDED_LIBS_2 = fltk
 
 VMDCOMP = GCC
 ifeq ("$(COMPILERNAME)", "intel")
@@ -87,8 +88,11 @@ DESCRIPTION:
 	) > $@
 
 LICENSE: $(SRC_DIRS)
-	for F in $(ADDED_LIBS); do \
+	for F in $(ADDED_LIBS_1); do \
 	  cp license-files/$$F-PKG-INFO $(SOURCE_DIR)/$$F-PKG-INFO; \
+	done
+	for F in $(ADDED_LIBS_2); do \
+	  cp license-files/$$F-COPYING $(SOURCE_DIR)/$$F-COPYING; \
 	done
 	$(CHECK_LICENSE_FILES)
 	echo University of Illinois > $@
@@ -97,9 +101,9 @@ build: $(SRC_DIRS)
 	patch $(SOURCE_DIR)/Makefile patch-files/Makefile.patch
 	perl -pi -e 's!ROLLVMDCOMP!$(VMDCOMP)!g' $(SOURCE_DIR)/Makefile
 	perl -pi -e 's!ROLLPKGROOT!$(PKGROOT)!g' $(SOURCE_DIR)/Makefile
-	patch $(FLTK_DIR)/Makefile patch-files/Makefile.fltk.patch
+	patch $(FLTK_DIR)/Makefile patch-files/fltk/Makefile.patch
 	perl -pi -e 's!ROLLINSTALL!$(CURDIR)/$(SOURCE_DIR)/lib/fltk!' $(FLTK_DIR)/Makefile
-	patch plugins/Make-arch patch-files/Make-arch.patch
+	patch plugins/Make-arch patch-files/plugins/Make-arch.patch
 	perl -pi -e 's!ROLLCC!$(CC)!' plugins/Make-arch
 	perl -pi -e 's!ROLLCXX!$(CXX)!' plugins/Make-arch
 	patch $(SOURCE_DIR)/configure patch-files/configure.patch
@@ -112,9 +116,11 @@ build: $(SRC_DIRS)
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  $(MODULE_LOAD_NETCDF); \
-	  export PYTHON_INCLUDE_DIR=$${PYTHONROOT}/include/python2.7; \
-	  export PYTHON_LIBRARY_DIR=$${PYTHONROOT}/lib; \
-	  export NUMPY_INCLUDE_DIR=$${PYTHONROOT}/lib/python2.7/site-packages/numpy/core/include; \
+          python_version=`python -c "from __future__ import print_function;import sys; print(sys.version[:3])"`; \
+          numpy_version=`python -c "import numpy; print numpy.__version__"`; \
+ 	  perl -pi -e 's!PYTHON_INCLUDE_DIR!'$${PYTHONROOT}'/include/python'$${python_version}'!g' $(SOURCE_DIR)/configure; \
+ 	  perl -pi -e 's!PYTHON_LIBRARY_DIR!'$${PYTHONROOT}'/lib!g' $(SOURCE_DIR)/configure; \
+ 	  perl -pi -e 's!NUMPY_INCLUDE_DIR!'$${PYTHONROOT}'/lib/python'$${python_version}'/site-packages/numpy-'$${numpy_version}'-py'$${python_version}'-linux-x86_64.egg/numpy/core/include!g' $(SOURCE_DIR)/configure; \
 	  export CC=$(CC); \
 	  cd $(TACHYON_DIR)/unix; \
 	  make $(TACHYON_ARCH); \
@@ -128,10 +134,10 @@ build: $(SRC_DIRS)
 	  cd ../$(FLTK_DIR); \
 	  make LIBS="-ldl -fPIC"; \
 	  make prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
-	  cd ../plugins; \
-	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
-	  make LINUXAMD64; \
-	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
+ 	  cd ../plugins; \
+ 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
+ 	  make LINUXAMD64; \
+ 	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
 	  cd ../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
@@ -156,4 +162,4 @@ install::
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) plugins _arch DESCRIPTION LICENSE
+	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) plugins DESCRIPTION LICENSE

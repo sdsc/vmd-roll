@@ -1,6 +1,6 @@
---- vmd-1.9.2/configure	2014-12-29 21:47:59.000000000 -0800
-+++ patch-files/configure	2015-08-27 14:43:37.000000000 -0700
-@@ -437,7 +437,7 @@
+--- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
++++ patch-files/configure	2017-04-19 13:45:26.012776954 -0700
+@@ -459,7 +459,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
  $arch_compress    = "compress";
@@ -9,16 +9,18 @@
  $arch_latex       = "latex";
  $arch_compilerc   = $arch_echo;
  $arch_rcflags     = "No resource compiler required on this platform.";
-@@ -621,7 +621,7 @@
+@@ -668,8 +668,8 @@
  $fltk_defines     = "-DVMDGUI -DVMDFLTK";
  $fltk_dir         = "$vmd_library_dir/fltk";
  $fltk_include     = "-I$fltk_dir/include";
 -$fltk_library     = "-L$fltk_dir/$config_arch";
+-$fltk_libs        = "-lfltk -lX11";
 +$fltk_library     = "-L$fltk_dir/lib";
- $fltk_libs        = "-lfltk -lX11";
++$fltk_libs        = "-lfltk -lX11 -lXfixes -lXrender -lXcursor";
  #@fltk_cc          = ('forms_ui.c');
  @fltk_cu          = ();
-@@ -953,7 +953,7 @@
+ @fltk_ccpp        = ( 'ColorFltkMenu.C',
+@@ -1106,7 +1106,7 @@
  $libtachyon_defines     = "-DVMDLIBTACHYON";
  $libtachyon_dir         = "$vmd_library_dir/tachyon";
  $libtachyon_include     = "-I$libtachyon_dir/include";
@@ -27,7 +29,7 @@
  $libtachyon_libs        = "-ltachyon";
  @libtachyon_cc          = ();
  @libtachyon_cu          = ();
-@@ -1142,7 +1142,7 @@
+@@ -1311,7 +1311,7 @@
  $actc_defines     = "-DVMDACTC";
  $actc_dir         = "$vmd_library_dir/actc";
  $actc_include     = "-I$actc_dir/include";
@@ -36,7 +38,7 @@
  $actc_libs        = "-lactc";
  @actc_cc          = ();
  @actc_cu          = ();
-@@ -1155,9 +1155,9 @@
+@@ -1324,9 +1324,9 @@
  # OPTIONAL COMPONENT: NetCDF I/O Library (Used by cdfplugin)
  #######################
  $netcdf_defines     = "";
@@ -48,21 +50,25 @@
  $netcdf_libs        = "-lnetcdf";
  @netcdf_cc          = ();
  @netcdf_cu          = ();
-@@ -1237,7 +1237,7 @@
+@@ -1386,9 +1386,9 @@
+ $stock_numpy_library_dir=$ENV{"NUMPY_LIBRARY_DIR"} || "$vmd_library_dir/python/lib_$config_arch/lib/python2.5/site-packages/numpy/core/include";
+ 
  $python_defines     = "-DVMDPYTHON";
- $python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
- $python_library     = "-L$stock_python_library_dir";
+-$python_include     = "-I$stock_python_include_dir -I$stock_numpy_include_dir -I$stock_numpy_library_dir";
+-$python_library     = "-L$stock_python_library_dir";
 -$python_libs        = "-lpython2.5 -lpthread";
++$python_include     = "-IPYTHON_INCLUDE_DIR -INUMPY_INCLUDE_DIR";
++$python_library     = "-LPYTHON_LIBRARY_DIR";
 +$python_libs        = "-lpython2.7 -lpthread";
  @python_h           = ('PythonTextInterp.h',
                         'VMDTkinterMenu.h',
  		       'py_commands.h',
-@@ -2254,7 +2254,7 @@
+@@ -1933,7 +1933,7 @@
+   $arch_lex         = "flex";  # has problems with the vendor lex... 
  
-     # this is to make tcl happy
-     # also needed for plugins
--    $system_libs .= " -ldl";
-+    $system_libs .= " -ldl -lXfixes -lXcursor";
+   # also needed for plugins
+-  $system_libs .= " -ldl";
++  $system_libs .= " -ldl -lXfixes -lXcursor";
  
-     if ($config_python) {
-       # this is to make python happy
+   if ($config_cuda) {
+ #    $arch_nvcc        = "/opt/nvidia/cudatoolkit/default/bin/nvcc";

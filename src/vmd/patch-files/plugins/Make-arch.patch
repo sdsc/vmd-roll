@@ -1,27 +1,26 @@
---- plugins/Make-arch	2014-08-20 12:54:59.000000000 -0700
-+++ patch-files/Make-arch	2015-12-03 13:19:42.112929252 -0800
-@@ -401,15 +401,18 @@
+--- plugins/Make-arch	2016-10-21 14:34:39.000000000 -0700
++++ patch-files/plugins/Make-arch	2017-04-18 18:20:18.707594931 -0700
+@@ -335,15 +335,17 @@
  LINUXAMD64:
  	$(MAKE) dynlibs staticlibs bins \
  	"ARCH = LINUXAMD64" \
 -	"COPTO = -fPIC -m64 -o " \
--	"LOPTO = -fPIC -m64 -o " \
+-	"LOPTO = -fPIC -m64 -lstdc++ -o " \
 -	"CC = gcc" \
 -	"CXX = g++" \
-+        "COPTO = -fPIC  -o " \
-+        "LOPTO = -fPIC -o " \
-+        "CC = ROLLCC" \
-+        "CXX = ROLLCXX" \
++	"COPTO = -fPIC -o " \
++	"LOPTO = -fPIC -lstdc++ -o " \
++	"CC = ROLLCC" \
++	"CXX = ROLLCXX" \
  	"DEF = -D" \
 -	"CCFLAGS = -m64 -O2 -fPIC -Wall" \
 -	"CXXFLAGS = -m64 -O2 -fPIC -Wall" \
 +	"CCFLAGS = -O2 -fPIC -Wall" \
 +	"CXXFLAGS = -O2 -fPIC -Wall" \
++        "TCLINC = -I/usr/include" \
++        "TCLLIB = -L/usr/lib64" \
  	"TCLLDFLAGS = -ltcl8.5 -ldl" \
 -	"NETCDFLDFLAGS = -lnetcdf " \
-+	"TCLINC = -I/usr/include" \
-+	"TCLLIB = -L/usr/lib64" \
-+	"INCDIRS= -I. -I../plugins/$OSARCH/molfile" \
 +	"NETCDFLDFLAGS = -LROLLNETCDF/lib -lnetcdf " \
  	"AR = ar" \
  	"NM = nm -p" \
