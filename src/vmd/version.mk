@@ -14,7 +14,7 @@ endif
 
 NAME            = sdsc-vmd
 VERSION         = 1.9.3
-RELEASE         = 0
+RELEASE         = 1
 PKGROOT         = /opt/vmd
 
 SRC_SUBDIR      = vmd

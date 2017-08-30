@@ -11,10 +11,17 @@ Copyright (c) 2000 - 2015 The Regents of the University of California.
 All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
 </copyright>
 
-<edge from="base">
+<edge from="login">
   <to>vmd-common</to>
 </edge>
-<order head="base">
+<order head="login">
+  <tail>vmd-common</tail>
+</order>
+
+<edge from="compute">
+  <to>vmd-common</to>
+</edge>
+<order head="compute">
   <tail>vmd-common</tail>
 </order>
 
