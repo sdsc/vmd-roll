@@ -71,8 +71,19 @@ To install, execute these instructions on a Rocks frontend:
 % rocks enable roll vmd
 % cd /export/rocks/install
 % rocks create distro
-% rocks run roll vmd | bash
 ```
+
+Subsequent installs of compute and login nodes will then include the contents
+of the vmd-roll.  To avoid cluttering the cluster frontend with unused
+software, the vmd-roll is configured to install only on compute and
+login nodes. To force installation on your frontend, run this command after
+adding the vmd-roll to your distro
+
+```shell
+% rocks run roll vmd host=NAME | bash
+```
+
+where NAME is the DNS name of a compute or login node in your cluster.
 
 In addition to the software itself, the roll installs vmd environment
 module files in:
