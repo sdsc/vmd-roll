@@ -14,7 +14,7 @@ endif
 
 NAME            = sdsc-vmd
 VERSION         = 1.9.3
-RELEASE         = 1
+RELEASE         = 2
 PKGROOT         = /opt/vmd
 
 SRC_SUBDIR      = vmd
@@ -45,4 +45,5 @@ TACHYON_DIR     = $(TACHYON_NAME)
 
 TAR_GZ_PKGS     = $(SOURCE_PKG) $(ACTC_PKG) $(FLTK_PKG) $(TACHYON_PKG)
 
-RPM.EXTRAS      = AutoReq:No
+RPM.EXTRAS      = AutoReq:No\nAutoProv:No
+RPM.PREFIX      = $(PKGROOT)
