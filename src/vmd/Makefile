@@ -121,7 +121,7 @@ build: $(SRC_DIRS)
  	  perl -pi -e 's!PYTHON_LIBRARY_DIR!'$${PYTHONROOT}'/lib!g' $(SOURCE_DIR)/configure; \
           PYTHON_INCLUDE=`find $${PYTHONROOT}/lib/python$${python_version} -name arrayobject.h | sed 's/numpy.arrayobject.h//'`; \
  	  perl -pi -e "s!NUMPY_INCLUDE_DIR!$${PYTHON_INCLUDE}!g" $(SOURCE_DIR)/configure; \
-	  export CC=$(CC); \
+	  export CC=mpicc; \
 	  cd $(TACHYON_DIR)/unix; \
 	  make $(TACHYON_ARCH); \
 	  cd ..; \
@@ -136,15 +136,18 @@ build: $(SRC_DIRS)
 	  make prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
  	  cd ../plugins; \
  	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
+ 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' Make-arch; \
  	  make LINUXAMD64; \
  	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
 	  cd ../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
+	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
 	  export VMDINSTALLLIBRARYDIR=$(PKGROOT)/lib; \
 	  make linux.amd64.opengl; \
 	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! if $$_ =~ /^LOADLIBES/' src/Makefile; \
 	  cd src; \
+	  patch Makefile $(REDHAT.ROOT)/src/vmd//patch-files/src/Makefile.patch; \
 	  make \
 	)
 	@echo "::: Package $(NAME) build complete :::"

@@ -1,5 +1,5 @@
 --- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
-+++ patch-files/configure	2017-04-19 13:45:26.012776954 -0700
++++ patch-files/configure	2018-03-10 15:52:45.197123690 -0800
 @@ -459,7 +459,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
@@ -38,19 +38,23 @@
  $actc_libs        = "-lactc";
  @actc_cc          = ();
  @actc_cu          = ();
-@@ -1324,9 +1324,9 @@
+@@ -1324,10 +1324,11 @@
  # OPTIONAL COMPONENT: NetCDF I/O Library (Used by cdfplugin)
  #######################
  $netcdf_defines     = "";
 -$netcdf_dir         = "$vmd_library_dir/netcdf";
-+$netcdf_dir         = "ROLLNETCDF";
- $netcdf_include     = "-I$netcdf_dir/include";
+-$netcdf_include     = "-I$netcdf_dir/include";
 -$netcdf_library     = "-L$netcdf_dir/lib_$config_arch";
-+$netcdf_library     = "-L$netcdf_dir/lib";
- $netcdf_libs        = "-lnetcdf";
+-$netcdf_libs        = "-lnetcdf";
++$netcdf_dir         = "ROLLNETCDF";
++$hdf5_dir           = "ROLLHDF5";
++$netcdf_include     = "-I$hdf5_dir/include -I$netcdf_dir/include";
++$netcdf_library     = "-L$hdf5_dir/lib -L$netcdf_dir/lib";
++$netcdf_libs        = "$netcdf_dir/lib/libnetcdf.a $netcdf_dir/lib/libpnetcdf.a $hdf5_dir/lib/libhdf5.a $hdf5_dir/lib/libhdf5_hl.a $netcdf_dir/lib/libnetcdf.a $netcdf_dir/lib/libpnetcdf.a $hdf5_dir/lib/libhdf5.a $hdf5_dir/lib/libhdf5_hl.a -lcurl -lz";
  @netcdf_cc          = ();
  @netcdf_cu          = ();
-@@ -1386,9 +1386,9 @@
+ @netcdf_ccpp        = ();
+@@ -1386,9 +1387,9 @@
  $stock_numpy_library_dir=$ENV{"NUMPY_LIBRARY_DIR"} || "$vmd_library_dir/python/lib_$config_arch/lib/python2.5/site-packages/numpy/core/include";
  
  $python_defines     = "-DVMDPYTHON";
@@ -63,7 +67,7 @@
  @python_h           = ('PythonTextInterp.h',
                         'VMDTkinterMenu.h',
  		       'py_commands.h',
-@@ -1933,7 +1933,7 @@
+@@ -1933,7 +1934,7 @@
    $arch_lex         = "flex";  # has problems with the vendor lex... 
  
    # also needed for plugins

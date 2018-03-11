@@ -1,6 +1,6 @@
 --- plugins/Make-arch	2016-10-21 14:34:39.000000000 -0700
-+++ patch-files/plugins/Make-arch	2017-04-18 18:20:18.707594931 -0700
-@@ -335,15 +335,17 @@
++++ patch-files/plugins/Make-arch	2018-03-10 20:26:09.760356711 -0800
+@@ -335,15 +335,19 @@
  LINUXAMD64:
  	$(MAKE) dynlibs staticlibs bins \
  	"ARCH = LINUXAMD64" \
@@ -21,7 +21,9 @@
 +        "TCLLIB = -L/usr/lib64" \
  	"TCLLDFLAGS = -ltcl8.5 -ldl" \
 -	"NETCDFLDFLAGS = -lnetcdf " \
-+	"NETCDFLDFLAGS = -LROLLNETCDF/lib -lnetcdf " \
++	"NETCDFLDFLAGS = -LROLLNETCDF/lib" \
++	"NETCDFINC = -IROLLMPI/include -IROLLHDF5/include -IROLLNETCDF/include" \
++	"NETCDFLIB = ROLLHDF5/lib/libhdf5.a ROLLHDF5/lib/libhdf5_hl.a ROLLNETCDF/lib/libnetcdf.a" \
  	"AR = ar" \
  	"NM = nm -p" \
  	"RANLIB = touch" \
