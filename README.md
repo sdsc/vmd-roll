@@ -26,9 +26,9 @@ and MPI
 rolls are available, but it will build without them as long as the environment
 variables they provide are otherwise defined.
 
-The build process requires cmake and the NETCDF libraries and assumes that
-the modulefiles provided by the SDSC cmake-roll and netcdf-roll
-are available.  It will build without the modulefiles as long as
+The build process requires cmake and the NETCDF and HDF5 libraries and
+assumes that the modulefiles provided by the SDSC cmake-roll, netcdf-roll and
+hdf-roll are available.  It will build without the modulefiles as long as
 the environment variables they provide are otherwise defined.
 
 
