@@ -1,0 +1,11 @@
+--- vmd-1.9.3/src/Makefile	2018-03-09 17:09:10.560083273 -0800
++++ patch-files/src/Makefile	2018-03-09 17:10:42.422048480 -0800
+@@ -546,7 +546,7 @@
+ 	if [ ! -r ./foobar ]; then \
+ 	  ln -s ../src/foobar ./foobar ; \
+ 	fi; \
+-	$(CCPP) $(CPPFLAGS) -I../src -o $@ $(VMD_OBJS) $(LOADLIBES) ; 
++	mpicxx $(CPPFLAGS) -I../src -o $@ $(VMD_OBJS) $(LOADLIBES) ; 
+ 	$(COMPILERC) $(RCFLAGS)
+ 
+ install:
