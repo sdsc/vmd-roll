@@ -103,8 +103,8 @@ build: $(SRC_DIRS)
 	patch $(FLTK_DIR)/Makefile patch-files/fltk/Makefile.patch
 	perl -pi -e 's!ROLLINSTALL!$(CURDIR)/$(SOURCE_DIR)/lib/fltk!' $(FLTK_DIR)/Makefile
 	patch plugins/Make-arch patch-files/plugins/Make-arch.patch
-	perl -pi -e 's!ROLLCC!$(CC)!' plugins/Make-arch
-	perl -pi -e 's!ROLLCXX!$(CXX)!' plugins/Make-arch
+	perl -pi -e 's!ROLLCC!mpicc!' plugins/Make-arch
+	perl -pi -e 's!ROLLCXX!mpicxx!' plugins/Make-arch
 	patch $(SOURCE_DIR)/configure patch-files/configure.patch
 	mkdir -p $(SOURCE_DIR)/lib/$(TACHYON_NAME)/{include,lib}
 	mkdir -p $(SOURCE_DIR)/lib/actc/{include,lib}
@@ -121,7 +121,6 @@ build: $(SRC_DIRS)
  	  perl -pi -e 's!PYTHON_LIBRARY_DIR!'$${PYTHONROOT}'/lib!g' $(SOURCE_DIR)/configure; \
           PYTHON_INCLUDE=`find $${PYTHONROOT}/lib/python$${python_version} -name arrayobject.h | sed 's/numpy.arrayobject.h//'`; \
  	  perl -pi -e "s!NUMPY_INCLUDE_DIR!$${PYTHON_INCLUDE}!g" $(SOURCE_DIR)/configure; \
-	  export CC=mpicc; \
 	  cd $(TACHYON_DIR)/unix; \
 	  make $(TACHYON_ARCH); \
 	  cd ..; \
@@ -137,6 +136,7 @@ build: $(SRC_DIRS)
  	  cd ../plugins; \
  	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
  	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' Make-arch; \
+	  perl -pi -e 's!ROLLMPI!'$${MPIHOME}'!g' Make-arch; \
  	  make LINUXAMD64; \
  	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
 	  cd ../$(SOURCE_DIR); \
