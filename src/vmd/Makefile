@@ -1,4 +1,3 @@
-# @Copyright@
 #
 # 				Rocks(r)
 # 		         www.rocksclusters.org
@@ -8,8 +7,8 @@
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
+# Modification, are permitted provided that the following conditions are
+# Met:
 #
 # 1. Redistributions of source code must retain the above copyright
 # notice, this list of conditions and the following disclaimer.
@@ -62,6 +61,7 @@ include $(SDSCDEVEL)/Rules.mk
 
 ADDED_LIBS_1 = actc tachyon
 ADDED_LIBS_2 = fltk
+ADDED_LIBS_3 = mafft
 
 VMDCOMP = GCC
 ifeq ("$(COMPILERNAME)", "intel")
@@ -92,6 +92,9 @@ LICENSE: $(SRC_DIRS)
 	done
 	for F in $(ADDED_LIBS_2); do \
 	  cp license-files/$$F-COPYING $(SOURCE_DIR)/$$F-COPYING; \
+	done
+	for F in $(ADDED_LIBS_3); do \
+	  cp license-files/$$F-LICENSE $(SOURCE_DIR)/$$F-LICENSE; \
 	done
 	$(CHECK_LICENSE_FILES)
 	echo University of Illinois > $@
@@ -133,22 +136,41 @@ build: $(SRC_DIRS)
 	  cd ../$(FLTK_DIR); \
 	  make LIBS="-ldl -fPIC"; \
 	  make prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
- 	  cd ../plugins; \
+          cd ../$(MAFFT_DIR)/core; \
+          make CC=$(CC); \
+          cd ../../$(STRIDE_DIR); \
+          make CC="$(CC) -O2"; \
+          cd ../plugins/phylotree/src; \
+          cp $(CURDIR)/Makefile.upgmaclu Makefile; \
+          make CC=$(CC); \
+          cd ../../../plugins/clustalw/src; \
+          cp $(CURDIR)/Makefile.clustalw Makefile; \
+          make CC=$(CC); \
+ 	  cd ../../../plugins; \
  	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' Make-arch; \
  	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' Make-arch; \
 	  perl -pi -e 's!ROLLMPI!'$${MPIHOME}'!g' Make-arch; \
  	  make LINUXAMD64; \
  	  make PLUGINDIR=`pwd`/../$(SOURCE_DIR)/plugins distrib; \
-	  cd ../$(SOURCE_DIR); \
+          cd libbiokit/src/libbiokit; \
+          cp $(CURDIR)/Makefile.libbiokit Makefile; \
+          make CXX=$(CXX); \
+          cd ../utils; \
+          cp $(CURDIR)/Makefile.utils Makefile; \
+          make; \
+          cd ../../../stamp/src; \
+          cp $(CURDIR)/Makefile.stamp Makefile; \
+          make CXX=$(CXX); \
+	  cd ../../../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
 	  export VMDINSTALLLIBRARYDIR=$(PKGROOT)/lib; \
-	  make linux.amd64.opengl; \
+	  make VERBOSE=1 linux.amd64.opengl; \
 	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! if $$_ =~ /^LOADLIBES/' src/Makefile; \
 	  cd src; \
 	  patch Makefile $(REDHAT.ROOT)/src/vmd//patch-files/src/Makefile.patch; \
-	  make \
+	  make VERBOSE=1 \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
@@ -156,13 +178,32 @@ install::
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/bin
 	$(PKGROOT_BIND_MOUNT)
 	( \
-	  cp $(TACHYON_NAME)/compile/$(TACHYON_ARCH)/tachyon $(ROOT)/$(PKGROOT)/bin; \
-	  cd $(SOURCE_DIR)/src; \
-	  make install \
+          cp $(STRIDE_DIR)/stride $(SOURCE_DIR)/lib/stride/stride_LINUXAMD64; \
+          cp $(TACHYON_DIR)/compile/linux-icc-thr-ogl/tachyon $(SOURCE_DIR)/lib/tachyon/tachyon_LINUXAMD64; \
+          cd $(SOURCE_DIR)/src; \
+          make install; \
+          cd ../..; \
+          cp $(MAFFT_DIR)/binaries/* $(PKGROOT)/bin; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/mafft1.1; \
+          cp plugins/mafft/mafft.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/mafft1.1; \
+          cp plugins/mafft.new/pkgIndex.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/mafft1.1; \
+          cp $(MAFFT_DIR)/core/mafft $(PKGROOT)/bin; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/phylotree1.2; \
+          cp plugins/phylotree/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/phylotree1.2 ; \
+          mkdir $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/stamp1.2; \
+          cp plugins/stamp/src/stamp $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/stamp1.2; \
+          cp plugins/stamp/*.tcl plugins/stamp/*.directories $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/stamp1.2; \
+          find plugins/libbiokit/src/utils \( -executable -a -type f -not -name Makefile \) -exec cp \{\} $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/libbiokit1.1 \; ; \
+          cp plugins/libbiokit/src/libbiokit/libbiokit.so $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/libbiokit1.1; \
+          cp stamp.defaults $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/stamp1.2; \
+          cp plugins/phylotree/src/upgmaclu $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/phylotree1.2; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1; \
+          cp plugins/clustalw/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1; \
+          cp plugins/clustalw/src/clustalw $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1 \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) plugins DESCRIPTION LICENSE
+	rm -rf $(SOURCE_DIR) $(ACTC_DIR) $(FLTK_DIR) $(TACHYON_DIR) $(MAFFT_DIR) $(STRIDE_DIR) plugins DESCRIPTION LICENSE

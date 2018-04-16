@@ -1,0 +1,63 @@
+OBJS = alnscore.o \
+	amenu.o \
+	calcgapcoeff.o \
+	calcprf1.o \
+	calcprf2.o \
+	calctree.o \
+	clustalw.o \
+	gcgcheck.o \
+	interface.o \
+	malign.o \
+	pairalign.o \
+	prfalign.o \
+	random.o \
+	readmat.o \
+	sequence.o \
+	showpair.o \
+	trees.o \
+	util.o
+
+
+# clustalw
+clustalw: ${OBJS}
+	${CC} ${CCFLAGS} ${OBJS} -o clustalw -lm
+    
+    
+# Objects.
+alnscore.o: alnscore.c
+	${CC} ${CCFLAGS} ${INCDIR} -c alnscore.c -o alnscore.o
+amenu.o: amenu.c
+	${CC} ${CCFLAGS} ${INCDIR} -c amenu.c -o amenu.o
+calcgapcoeff.o: calcgapcoeff.c
+	${CC} ${CCFLAGS} ${INCDIR} -c calcgapcoeff.c -o calcgapcoeff.o
+calcprf1.o: calcprf1.c
+	${CC} ${CCFLAGS} ${INCDIR} -c calcprf1.c -o calcprf1.o
+calcprf2.o: calcprf2.c
+	${CC} ${CCFLAGS} ${INCDIR} -c calcprf2.c -o calcprf2.o
+calctree.o: calctree.c
+	${CC} ${CCFLAGS} ${INCDIR} -c calctree.c -o calctree.o
+clustalw.o: clustalw.c
+	${CC} ${CCFLAGS} ${INCDIR} -c clustalw.c -o clustalw.o
+gcgcheck.o: gcgcheck.c
+	${CC} ${CCFLAGS} ${INCDIR} -c gcgcheck.c -o gcgcheck.o
+interface.o: interface.c
+	${CC} ${CCFLAGS} ${INCDIR} -c interface.c -o interface.o
+malign.o: malign.c
+	${CC} ${CCFLAGS} ${INCDIR} -c malign.c -o malign.o
+pairalign.o: pairalign.c
+	${CC} ${CCFLAGS} ${INCDIR} -c pairalign.c -o pairalign.o
+prfalign.o: prfalign.c
+	${CC} ${CCFLAGS} ${INCDIR} -c prfalign.c -o prfalign.o
+random.o: random.c
+	${CC} ${CCFLAGS} ${INCDIR} -c random.c -o random.o
+readmat.o: readmat.c
+	${CC} ${CCFLAGS} ${INCDIR} -c readmat.c -o readmat.o
+sequence.o: sequence.c
+	${CC} ${CCFLAGS} ${INCDIR} -c sequence.c -o sequence.o
+showpair.o: showpair.c
+	${CC} ${CCFLAGS} ${INCDIR} -c showpair.c -o showpair.o
+trees.o: trees.c
+	${CC} ${CCFLAGS} ${INCDIR} -c trees.c -o trees.o
+util.o: util.c
+	${CC} ${CCFLAGS} ${INCDIR} -c util.c -o util.o
+
