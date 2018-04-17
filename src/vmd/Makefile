@@ -140,6 +140,10 @@ build: $(SRC_DIRS)
           make CC=$(CC); \
           cd ../../$(STRIDE_DIR); \
           make CC="$(CC) -O2"; \
+          cd ../../$(SOURCE_DIR)/lib/surf; \
+          gunzip surf.tar.Z; \
+          makedepend; \
+          make CC=$(CC); \
           cd ../plugins/phylotree/src; \
           cp $(CURDIR)/Makefile.upgmaclu Makefile; \
           make CC=$(CC); \
@@ -180,6 +184,7 @@ install::
 	( \
           cp $(STRIDE_DIR)/stride $(SOURCE_DIR)/lib/stride/stride_LINUXAMD64; \
           cp $(TACHYON_DIR)/compile/linux-icc-thr-ogl/tachyon $(SOURCE_DIR)/lib/tachyon/tachyon_LINUXAMD64; \
+          cp  $(SOURCE_DIR)/lib/surf/surf $(SOURCE_DIR)/lib/surf/surf_LINUXAMD64; \
           cd $(SOURCE_DIR)/src; \
           make install; \
           cd ../..; \
