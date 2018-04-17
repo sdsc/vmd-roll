@@ -142,6 +142,7 @@ build: $(SRC_DIRS)
           make CC="$(CC) -O2"; \
           cd ../$(SOURCE_DIR)/lib/surf; \
           gunzip surf.tar.Z; \
+          tar xf surf.tar;
           makedepend; \
           make CC=$(CC); \
           cd ../plugins/phylotree/src; \
