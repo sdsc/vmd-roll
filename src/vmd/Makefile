@@ -140,7 +140,7 @@ build: $(SRC_DIRS)
           make CC=$(CC); \
           cd ../../$(STRIDE_DIR); \
           make CC="$(CC) -O2"; \
-          cd ../../$(SOURCE_DIR)/lib/surf; \
+          cd ../$(SOURCE_DIR)/lib/surf; \
           gunzip surf.tar.Z; \
           makedepend; \
           make CC=$(CC); \
