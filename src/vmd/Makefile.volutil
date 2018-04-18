@@ -1,0 +1,74 @@
+# Makefile for volutil
+
+.SUFFIXES:
+
+PKGNAME = volutil
+PKGVERSION = 1.3
+
+AR = ar
+ARFLAGS = cr
+RANLIB = ranlib
+COMPILEDIR=../../compile
+ARCH=LINUXAMD64
+INCDIR= -I../../include
+NETCDFLIB=-L$(NETCDFHOME)/lib -lnetcdf
+
+distrib: volutil
+
+VOLUTILOBJS = volmap.o \
+              binary_ops.o \
+              convolutions.o \
+              unary_ops.o \
+              voxels.o \
+              ops.o \
+              vec.o \
+              hash.o \
+              getplugins.o \
+              molfile.o \
+              params.o \
+              main.o
+
+volutil: $(VOLUTILOBJS)
+	$(CXX) $(CXXFLAGS) $(VOLUTILOBJS) -o volutil -L$(COMPILEDIR)/lib_$(ARCH)/molfile -lmolfile_plugin $(COMPILEDIR)/lib_$(ARCH)/molfile/webpdbplugin.so -ltcl8.5 $(TCLLIB) $(TCLLDFLAGS) $(NETCDFLIB) $(NETCDFLDFLAGS) $(EXPATLIB) $(EXPATLDFLAGS) $(SQLITELIB) $(SQLITELDFLAGS) -lm
+
+
+volmap.o: volmap.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c volmap.C -o volmap.o
+
+binary_ops.o: binary_ops.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c binary_ops.C -o binary_ops.o
+
+convolutions.o: convolutions.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c convolutions.C -o convolutions.o
+
+unary_ops.o: unary_ops.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c unary_ops.C -o unary_ops.o
+
+voxels.o: voxels.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c voxels.C -o voxels.o
+
+ops.o: ops.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c ops.C -o ops.o
+
+
+vec.o: vec.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c vec.C -o vec.o
+
+hash.o: hash.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c hash.C -o hash.o
+
+getplugins.o: getplugins.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c getplugins.C -o getplugins.o
+
+molfile.o: molfile.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c molfile.C -o molfile.o
+
+params.o: params.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c params.C -o params.o
+
+main.o: main.C
+	$(CXX) $(CXXFLAGS) $(INCDIR) -c main.C -o main.o
+
+
+clean:
+	rm -f *.o volutil

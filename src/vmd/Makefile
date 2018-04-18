@@ -130,12 +130,12 @@ build: $(SRC_DIRS)
 	  cp compile/*/libtachyon.a ../$(SOURCE_DIR)/lib/$(TACHYON_NAME)/lib/;\
 	  cp src/*.h ../$(SOURCE_DIR)/lib/$(TACHYON_NAME)/include/; \
 	  cd ../$(ACTC_DIR); \
-	  make; \
+	  make CC=$(CC); \
 	  cp *.a ../$(SOURCE_DIR)/lib/actc/lib/; \
 	  cp *.h ../$(SOURCE_DIR)/lib/actc/include/; \
 	  cd ../$(FLTK_DIR); \
-	  make LIBS="-ldl -fPIC"; \
-	  make prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
+	  make CXX=$(CXX) LIBS="-ldl -fPIC"; \
+	  make CXX=$(CXX) prefix=`pwd`/../$(SOURCE_DIR)/lib/fltk install; \
           cd ../$(MAFFT_DIR)/core; \
           make CC=$(CC); \
           cd ../../$(STRIDE_DIR); \
@@ -145,7 +145,7 @@ build: $(SRC_DIRS)
           tar xf surf.tar; \
           makedepend; \
           make CC=$(CC); \
-          cd ../plugins/phylotree/src; \
+          cd ../../../plugins/phylotree/src; \
           cp $(CURDIR)/Makefile.upgmaclu Makefile; \
           make CC=$(CC); \
           cd ../../../plugins/clustalw/src; \
@@ -166,16 +166,27 @@ build: $(SRC_DIRS)
           cd ../../../stamp/src; \
           cp $(CURDIR)/Makefile.stamp Makefile; \
           make CXX=$(CXX); \
+          cd ../../cionize; \
+          cp $(CURDIR)/Makefile.cionize Makefile; \
+          cp ../compile/lib_LINUXAMD64/molfile/libmolfile_plugin.h . ; \
+          make CC=$(CC) CXX=$(CXX); \
+          cd ../volutil/src; \
+          cp $(CURDIR)/Makefile.volutil Makefile; \
+          cp ../../compile/lib_LINUXAMD64/molfile/libmolfile_plugin.h . ; \
+          make CXX=$(CXX); \
+          cd ../../rnaview/src; \
+          cp ${CURDIR}/Makefile.rnaview Makefile; \
+          make CC=$(CC); \
 	  cd ../../../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
 	  export VMDINSTALLLIBRARYDIR=$(PKGROOT)/lib; \
 	  make VERBOSE=1 linux.amd64.opengl; \
-	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! if $$_ =~ /^LOADLIBES/' src/Makefile; \
+	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! ..if $$_ =~ /^LOADLIBES/' src/Makefile; \
 	  cd src; \
 	  patch Makefile $(REDHAT.ROOT)/src/vmd//patch-files/src/Makefile.patch; \
-	  make VERBOSE=1 \
+	  make \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
@@ -205,7 +216,19 @@ install::
           cp plugins/phylotree/src/upgmaclu $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/phylotree1.2; \
           mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1; \
           cp plugins/clustalw/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1; \
-          cp plugins/clustalw/src/clustalw $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1 \
+          cp plugins/clustalw/src/clustalw $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/clustalw1.1; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/cionize1.0; \
+          cp plugins/cionize/cionize $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/cionize1.0; \
+          cp plugins/cionize/*.tcl  $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/cionize1.0; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/volutil1.3; \
+          cp plugins/volutil/src/volutil $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/volutil1.3; \
+          cp plugins/volutil/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/volutil1.3; \
+          mkdir -p $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
+          cp plugins/qwikmd/*.tcl  $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
+          cp plugins/qwikmd/*.conf  $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
+          mkdir mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
+          cp plugins/rnaview/src/rnaview $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
+          cp plugins/rnaview/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)

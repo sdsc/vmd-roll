@@ -1,0 +1,82 @@
+# Makefile for cionize
+
+#.SILENT:
+
+.SUFFIXES: 
+
+AR= ar
+ARFLAGS = cr
+RANLIB = ranlib
+ARCH=LINUXAMD64
+COMPILEDIR=../../plugins/compile
+
+INCDIR=-I. -I../include
+
+# Rules
+#
+
+distrib: cionize
+
+IONIZEOBJS = hash.o threads.o util.o getplugins.o energythr.o cionize_gridio.o cionize_molfileio.o cionize_internals.o cionize_userio.o
+MGPOTOBJS = mgpot.o mgpot_error.o mgpot_lattice.o mgpot_setup.o mgpot_shortrng.o mgpot_longrng.o mgpot_cubic.o mgpot_quintic1.o
+#MGPOTFLAGS = -DDEBUG
+
+cionize: ${IONIZEOBJS} ${MGPOTOBJS} cionize.o
+	${CXX} ${CXXFLAGS} cionize.o ${IONIZEOBJS} ${MGPOTOBJS} -o cionize -L${COMPILEDIR}/lib_${ARCH}/molfile -lmolfile_plugin $(COMPILEDIR)/lib_$(ARCH)/molfile/webpdbplugin.so -ltcl8.5 ${NETCDFLIB} ${NETCDFLDFLAGS} ${EXPATLIB} ${EXPATLDFLAGS} ${SQLITELIB} ${SQLITELDFLAGS} -L $(NETCDFHOME)/lib -lnetcdf -lm
+
+hash.o: hash.h hash.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c hash.c -o hash.o
+
+threads.o: threads.h threads.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c threads.c -o threads.o
+
+util.o: util.h util.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c util.c -o util.o
+
+getplugins.o: getplugins.h getplugins.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c getplugins.c -o getplugins.o
+	
+energythr.o: energythr.h energythr.c util.o threads.o
+	${CC}  ${CCFLAGS} ${INCDIR} -c energythr.c -o energythr.o
+
+cionize.o: hash.h cionize.c energythr.o threads.o util.o mgpot.h mgpot.o
+	${CC}  ${CCFLAGS} ${INCDIR} -c cionize.c -o cionize.o
+
+mgpot.o: mgpot.h mgpot.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h util.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot.c -o mgpot.o
+
+mgpot_error.o: mgpot_error.c mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_error.c -o mgpot_error.o
+
+mgpot_lattice.o: mgpot_lattice.c mgpot_lattice.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_lattice.c -o mgpot_lattice.o
+
+cionize_gridio.o: cionize_gridio.h cionize_gridio.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c cionize_gridio.c -o cionize_gridio.o
+
+cionize_molfileio.o: cionize_molfileio.h cionize_molfileio.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c cionize_molfileio.c -o cionize_molfileio.o
+
+cionize_userio.o: cionize_userio.h cionize_userio.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c cionize_userio.c -o cionize_userio.o
+
+cionize_internals.o: cionize_internals.h cionize_internals.c
+	${CC}  ${CCFLAGS} ${INCDIR} -c cionize_internals.c -o cionize_internals.o
+
+mgpot_setup.o: mgpot_setup.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_setup.c -o mgpot_setup.o
+
+mgpot_shortrng.o: mgpot_shortrng.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_shortrng.c -o mgpot_shortrng.o
+
+mgpot_longrng.o: mgpot_longrng.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_longrng.c -o mgpot_longrng.o
+
+mgpot_cubic.o: mgpot_cubic.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_cubic.c -o mgpot_cubic.o
+
+mgpot_quintic1.o: mgpot_quintic1.c mgpot_defn.h mgpot_lattice.h mgpot_split.h mgpot_error.h
+	${CC}  ${CCFLAGS} ${MGPOTFLAGS} ${INCDIR} -c mgpot_quintic1.c -o mgpot_quintic1.o
+
+clean:
+	rm -f *.o cionize
