@@ -1,0 +1,198 @@
+# Makefile for stamp
+
+.SUFFIXES: 
+
+PKGNAME = stamp
+
+
+AR= ar
+ARFLAGS = cr
+RANLIB = ranlib
+
+COMPILEDIR = .
+SRCDIR=.
+INCDIR=-I.
+VPATH =. ${ARCHDIR}
+
+#
+# Rules
+#
+bins: ${ARCHDIR} stamp
+win32bins: ${ARCHDIR} stamp.exe
+dynlibs:
+staticlibs: 
+win32staticlibs: 
+
+distrib: stamp
+    
+${ARCHDIR}: $(OBJS)
+	mkdir -p stamp.exe
+
+OBJS = a3to1.o \
+	aliseq.o \
+	ccprobcalc.o \
+	closefile.o \
+	count_domain.o \
+	display_align.o \
+	dosort.o \
+	get_clust.o \
+	getdomain.o \
+	getdsspsum.o \
+	getfile.o \
+	getks.o \
+	getsec.o \
+	gjnoc.o \
+	gjutil.o \
+	idist.o \
+	igetca.o \
+	igetcadssp.o \
+	ltou.o \
+	makeafile.o \
+	matfit.o \
+	matinv.o \
+	matmult.o \
+	murzin_P.o \
+	newoutput.o \
+	openfile.o \
+	pairfit.o \
+	pairpath.o \
+	pairwise.o \
+	printmat.o \
+	printmat2.o \
+	probcalc.o \
+	probplot.o \
+	qkfit.o \
+	readtree.o \
+	reval.o \
+	revmatmult.o \
+	rossmann.o \
+	roughfit.o \
+	scan.o \
+	sec_content.o \
+	slow_scan.o \
+	stamp.o \
+	stampgetpars.o \
+	sw7ccs.o \
+	swstruc.o \
+	testfile.o \
+	treefit.o \
+	treepath.o \
+	treewise.o \
+	update.o \
+	utol.o
+
+
+
+# stamp
+stamp: ${OBJS}
+	${CC} ${CCFLAGS} ${OBJS} -o stamp -lm
+    
+    
+# Objects.
+a3to1.o: ${SRCDIR}/a3to1.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/a3to1.c -o $(COPTO)a3to1.o
+aliseq.o: ${SRCDIR}/aliseq.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/aliseq.c -o $(COPTO)aliseq.o
+ccprobcalc.o: ${SRCDIR}/ccprobcalc.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/ccprobcalc.c -o $(COPTO)ccprobcalc.o
+closefile.o: ${SRCDIR}/closefile.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/closefile.c -o $(COPTO)closefile.o
+count_domain.o: ${SRCDIR}/count_domain.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/count_domain.c -o $(COPTO)count_domain.o
+display_align.o: ${SRCDIR}/display_align.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/display_align.c -o $(COPTO)display_align.o
+dosort.o: ${SRCDIR}/dosort.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/dosort.c -o $(COPTO)dosort.o
+get_clust.o: ${SRCDIR}/get_clust.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/get_clust.c -o $(COPTO)get_clust.o
+getdomain.o: ${SRCDIR}/getdomain.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/getdomain.c -o $(COPTO)getdomain.o
+getdsspsum.o: ${SRCDIR}/getdsspsum.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/getdsspsum.c -o $(COPTO)getdsspsum.o
+getfile.o: ${SRCDIR}/getfile.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/getfile.c -o $(COPTO)getfile.o
+getks.o: ${SRCDIR}/getks.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/getks.c -o $(COPTO)getks.o
+getsec.o: ${SRCDIR}/getsec.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/getsec.c -o $(COPTO)getsec.o
+gjnoc.o: ${SRCDIR}/gjnoc.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/gjnoc.c -o $(COPTO)gjnoc.o
+gjutil.o: ${SRCDIR}/gjutil.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/gjutil.c -o $(COPTO)gjutil.o
+idist.o: ${SRCDIR}/idist.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/idist.c -o $(COPTO)idist.o
+igetca.o: ${SRCDIR}/igetca.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/igetca.c -o $(COPTO)igetca.o
+igetcadssp.o: ${SRCDIR}/igetcadssp.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/igetcadssp.c -o $(COPTO)igetcadssp.o
+ltou.o: ${SRCDIR}/ltou.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/ltou.c -o $(COPTO)ltou.o
+makeafile.o: ${SRCDIR}/makeafile.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/makeafile.c -o $(COPTO)makeafile.o
+matfit.o: ${SRCDIR}/matfit.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/matfit.c -o $(COPTO)matfit.o
+matinv.o: ${SRCDIR}/matinv.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/matinv.c -o $(COPTO)matinv.o
+matmult.o: ${SRCDIR}/matmult.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/matmult.c -o $(COPTO)matmult.o
+murzin_P.o: ${SRCDIR}/murzin_P.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/murzin_P.c -o $(COPTO)murzin_P.o
+newoutput.o: ${SRCDIR}/newoutput.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/newoutput.c -o $(COPTO)newoutput.o
+openfile.o: ${SRCDIR}/openfile.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/openfile.c -o $(COPTO)openfile.o
+pairfit.o: ${SRCDIR}/pairfit.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/pairfit.c -o $(COPTO)pairfit.o
+pairpath.o: ${SRCDIR}/pairpath.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/pairpath.c -o $(COPTO)pairpath.o
+pairwise.o: ${SRCDIR}/pairwise.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/pairwise.c -o $(COPTO)pairwise.o
+printmat.o: ${SRCDIR}/printmat.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/printmat.c -o $(COPTO)printmat.o
+printmat2.o: ${SRCDIR}/printmat2.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/printmat2.c -o $(COPTO)printmat2.o
+probcalc.o: ${SRCDIR}/probcalc.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/probcalc.c -o $(COPTO)probcalc.o
+probplot.o: ${SRCDIR}/probplot.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/probplot.c -o $(COPTO)probplot.o
+qkfit.o: ${SRCDIR}/qkfit.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/qkfit.c -o $(COPTO)qkfit.o
+readtree.o: ${SRCDIR}/readtree.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/readtree.c -o $(COPTO)readtree.o
+reval.o: ${SRCDIR}/reval.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/reval.c -o $(COPTO)reval.o
+revmatmult.o: ${SRCDIR}/revmatmult.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/revmatmult.c -o $(COPTO)revmatmult.o
+rossmann.o: ${SRCDIR}/rossmann.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/rossmann.c -o $(COPTO)rossmann.o
+roughfit.o: ${SRCDIR}/roughfit.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/roughfit.c -o $(COPTO)roughfit.o
+scan.o: ${SRCDIR}/scan.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/scan.c -o $(COPTO)scan.o
+sec_content.o: ${SRCDIR}/sec_content.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/sec_content.c -o $(COPTO)sec_content.o
+slow_scan.o: ${SRCDIR}/slow_scan.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/slow_scan.c -o $(COPTO)slow_scan.o
+stamp.o: ${SRCDIR}/stamp.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/stamp.c -o $(COPTO)stamp.o
+stampgetpars.o: ${SRCDIR}/stampgetpars.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/stampgetpars.c -o $(COPTO)stampgetpars.o
+sw7ccs.o: ${SRCDIR}/sw7ccs.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/sw7ccs.c -o $(COPTO)sw7ccs.o
+swstruc.o: ${SRCDIR}/swstruc.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/swstruc.c -o $(COPTO)swstruc.o
+testfile.o: ${SRCDIR}/testfile.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/testfile.c -o $(COPTO)testfile.o
+treefit.o: ${SRCDIR}/treefit.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/treefit.c -o $(COPTO)treefit.o
+treepath.o: ${SRCDIR}/treepath.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/treepath.c -o $(COPTO)treepath.o
+treewise.o: ${SRCDIR}/treewise.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/treewise.c -o $(COPTO)treewise.o
+update.o: ${SRCDIR}/update.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/update.c -o $(COPTO)update.o
+utol.o: ${SRCDIR}/utol.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ${SRCDIR}/utol.c -o $(COPTO)utol.o
+
+clean:
+	rm -rf *.o stamp

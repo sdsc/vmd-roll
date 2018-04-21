@@ -1,0 +1,64 @@
+# Makefile for rnaview
+
+.SUFFIXES:
+
+COMPILEDIR = ../compile
+INCDIR=-Isrc
+
+#
+# Rules
+# 
+
+distrib: rnaview
+
+
+OBJS = analyze.o \
+       fpair.o \
+       fpair_sub.o \
+       multiple.o \
+       nrutil.o \
+       pair_type.o \
+       pattern.o \
+       ps-xy.o \
+       ps-xy-sub.o \
+       rnaview.o \
+       rnaxml-new.o \
+       statistics.o \
+       vrml.o \
+       xml2ps.o 
+
+rnaview: ${OBJS}
+	${CC} ${CCFLAGS} ${OBJS} -o rnaview -lm
+
+analyze.o: analyze.c
+	${CC} ${CCFLAGS} ${INCDIR} -c analyze.c -o analyze.o
+fpair.o: fpair.c
+	${CC} ${CCFLAGS} ${INCDIR} -c fpair.c -o fpair.o
+fpair_sub.o: fpair_sub.c
+	${CC} ${CCFLAGS} ${INCDIR} -c fpair_sub.c -o fpair_sub.o
+multiple.o: multiple.c
+	${CC} ${CCFLAGS} ${INCDIR} -c multiple.c -o multiple.o
+nrutil.o: nrutil.c
+	${CC} ${CCFLAGS} ${INCDIR} -c nrutil.c -o nrutil.o
+pair_type.o: pair_type.c
+	${CC} ${CCFLAGS} ${INCDIR} -c pair_type.c -o pair_type.o
+pattern.o: pattern.c
+	${CC} ${CCFLAGS} ${INCDIR} -c pattern.c -o pattern.o
+ps-xy.o: ps-xy.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ps-xy.c -o ps-xy.o
+ps-xy-sub.o: ps-xy-sub.c
+	${CC} ${CCFLAGS} ${INCDIR} -c ps-xy-sub.c -o ps-xy-sub.o
+rnaview.o: rnaview.c
+	${CC} ${CCFLAGS} ${INCDIR} -c rnaview.c -o rnaview.o
+rnaxml-new.o: rnaxml-new.c
+	${CC} ${CCFLAGS} ${INCDIR} -c rnaxml-new.c -o rnaxml-new.o
+statistics.o: statistics.c
+	${CC} ${CCFLAGS} ${INCDIR} -c statistics.c -o statistics.o
+vrml.o: vrml.c
+	${CC} ${CCFLAGS} ${INCDIR} -c vrml.c -o vrml.o
+xml2ps.o: xml2ps.c
+	${CC} ${CCFLAGS} ${INCDIR} -c xml2ps.c -o xml2ps.o
+
+
+clean:
+	rm -f *.o rnaview

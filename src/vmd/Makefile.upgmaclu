@@ -1,0 +1,9 @@
+SOURCE = upgmaclu.c
+
+OBJS = $(SOURCE:.cpp=.o)
+
+upgmaclu : $(OBJS)
+	$(CC) -o upgmaclu  $(OBJS)
+
+clean:
+	rm -f $(OBJS) upgmaclu

@@ -5,5 +5,8 @@ setenv VMDHOME /opt/vmd
 module load ROLLCOMPILER ROLLMPI
 module load python
 module load netcdf
+module load gsl
 prepend-path PATH /opt/vmd/bin 
+prepend-path LD_LIBRARY_PATH /opt/vmd/lib/plugins/LINUXAMD64/tcl/libbiokit1.1
+setenv MAFFT_BINARIES /opt/vmd/bin
 
