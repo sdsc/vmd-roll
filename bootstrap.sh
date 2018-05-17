@@ -1,2 +1,2 @@
 # Install additional system packages required for roll build.
-yum install mesa-libGLU-devel flex-devel
+yum install mesa-libGL-devel mesa-libGLU-devel flex-devel
