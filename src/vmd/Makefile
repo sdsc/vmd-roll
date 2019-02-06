@@ -177,6 +177,9 @@ build: $(SRC_DIRS)
           cd ../../rnaview/src; \
           cp ${CURDIR}/Makefile.rnaview Makefile; \
           make CC=$(CC); \
+          cd ../../catdcd/src; \
+          cp ${CURDIR}/Makefile.catdcd Makefile; \
+          make CC=$(CC); \
 	  cd ../../../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
