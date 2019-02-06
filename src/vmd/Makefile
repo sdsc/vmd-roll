@@ -177,7 +177,7 @@ build: $(SRC_DIRS)
           cd ../../rnaview/src; \
           cp ${CURDIR}/Makefile.rnaview Makefile; \
           make CC=$(CC); \
-          cd ../../catdcd/src; \
+          cd ../../catdcd; \
           cp ${CURDIR}/Makefile.catdcd Makefile; \
           make CC=$(CC); \
 	  cd ../../../$(SOURCE_DIR); \
