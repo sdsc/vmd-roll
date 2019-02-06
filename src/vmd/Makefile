@@ -179,8 +179,8 @@ build: $(SRC_DIRS)
           make CC=$(CC); \
           cd ../../catdcd; \
           cp ${CURDIR}/Makefile.catdcd Makefile; \
-          make CC=$(CC); \
-	  cd ../../../$(SOURCE_DIR); \
+          make CXX=$(CXX); \
+	  cd ../../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
