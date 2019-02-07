@@ -232,6 +232,7 @@ install::
           mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
           cp plugins/rnaview/src/rnaview $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
           cp plugins/rnaview/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
+          cp plugins/catdcd/catdcd $(PKGROOT)/bin; \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
