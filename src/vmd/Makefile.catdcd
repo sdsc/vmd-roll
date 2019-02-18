@@ -1,0 +1,35 @@
+# Makefile for catdcd
+
+.SILENT:
+
+.SUFFIXES: 
+
+AR= ar
+ARFLAGS = cr
+RANLIB = ranlib
+ARCH=LINUXAMD64
+
+COMPILEDIR = ../compile
+SRCDIR=.
+INCDIR=-I. -I../include -I${COMPILEDIR}/lib_${ARCH}/molfile
+NETCDFLIB=-L${NETCDFHOME}/lib -lnetcdf
+
+#
+# Rules
+#
+
+distrib: catdcd
+
+CATDCDOBJS = hash.o catdcd.o
+
+# all other platforms
+catdcd : ${CATDCDOBJS} ${COMPILEDIR}/lib_${ARCH}/molfile/libmolfile_plugin.a
+	${CXX} ${CXXFLAGS} ${CATDCDOBJS} -o catdcd -L${COMPILEDIR}/lib_${ARCH}/molfile -lmolfile_plugin -ltcl8.5 ${TCLLIB} ${TCLLDFLAGS} ${NETCDFLIB} ${NETCDFLDFLAGS} ${EXPATLIB} ${EXPATLDFLAGS} ${SQLITELIB} ${SQLITELDFLAGS} -lm
+
+hash.o: hash.h hash.c
+	${CXX} ${CXXFLAGS} ${INCDIR} -c ${SRCDIR}/hash.c -o hash.o
+
+catdcd.o: hash.h catdcd.c
+	${CXX} ${CXXFLAGS} ${INCDIR} -c ${SRCDIR}/catdcd.c -o catdcd.o
+
+

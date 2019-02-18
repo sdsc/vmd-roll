@@ -177,7 +177,10 @@ build: $(SRC_DIRS)
           cd ../../rnaview/src; \
           cp ${CURDIR}/Makefile.rnaview Makefile; \
           make CC=$(CC); \
-	  cd ../../../$(SOURCE_DIR); \
+          cd ../../catdcd; \
+          cp ${CURDIR}/Makefile.catdcd Makefile; \
+          make CXX=$(CXX); \
+	  cd ../../$(SOURCE_DIR); \
 	  perl -pi -e 's!ROLLNETCDF!'$${NETCDFHOME}'!g' configure; \
 	  perl -pi -e 's!ROLLHDF5!'$${HDF5HOME}'!g' configure; \
 	  export VMDINSTALLBINDIR=$(PKGROOT)/bin; \
@@ -185,7 +188,7 @@ build: $(SRC_DIRS)
 	  make VERBOSE=1 linux.amd64.opengl; \
 	  perl -pi -e 's!$$! /usr/lib64/libXext.so.6 /usr/lib64/libXft.so.2 /usr/lib64/libfontconfig.so.1! ..if $$_ =~ /^LOADLIBES/' src/Makefile; \
 	  cd src; \
-	  patch Makefile $(REDHAT.ROOT)/src/vmd//patch-files/src/Makefile.patch; \
+	  patch Makefile $(REDHAT.ROOT)/src/vmd/patch-files/src/Makefile.patch; \
 	  make \
 	)
 	@echo "::: Package $(NAME) build complete :::"
@@ -226,9 +229,10 @@ install::
           mkdir -p $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
           cp plugins/qwikmd/*.tcl  $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
           cp plugins/qwikmd/*.conf  $(PKGROOT)/lib/plugins/noarch/tcl/qwikmd1.1; \
-          mkdir mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
+          mkdir -p $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
           cp plugins/rnaview/src/rnaview $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
           cp plugins/rnaview/*.tcl $(PKGROOT)/lib/plugins/LINUXAMD64/tcl/rnaview1.1; \
+          cp plugins/catdcd/catdcd $(PKGROOT)/bin; \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
