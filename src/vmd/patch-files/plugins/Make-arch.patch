@@ -1,5 +1,5 @@
---- plugins/Make-arch	2016-10-21 14:34:39.000000000 -0700
-+++ patch-files/plugins/Make-arch	2018-03-10 20:26:09.760356711 -0800
+--- plugins/Make-arch	2019-02-07 13:22:59.000000000 -0800
++++ patch-files/plugins/Make-arch	2019-11-06 13:02:59.209674506 -0800
 @@ -335,15 +335,19 @@
  LINUXAMD64:
  	$(MAKE) dynlibs staticlibs bins \
@@ -8,22 +8,22 @@
 -	"LOPTO = -fPIC -m64 -lstdc++ -o " \
 -	"CC = gcc" \
 -	"CXX = g++" \
-+	"COPTO = -fPIC -o " \
-+	"LOPTO = -fPIC -lstdc++ -o " \
-+	"CC = ROLLCC" \
-+	"CXX = ROLLCXX" \
++        "COPTO = -fPIC -o " \
++        "LOPTO = -fPIC -lstdc++ -o " \
++        "CC = ROLLCC" \
++        "CXX = ROLLCXX" \
  	"DEF = -D" \
 -	"CCFLAGS = -m64 -O2 -fPIC -Wall" \
 -	"CXXFLAGS = -m64 -O2 -fPIC -Wall" \
-+	"CCFLAGS = -O2 -fPIC -Wall" \
-+	"CXXFLAGS = -O2 -fPIC -Wall" \
++        "CCFLAGS = -O2 -fPIC -Wall" \
++        "CXXFLAGS = -O2 -fPIC -Wall" \
 +        "TCLINC = -I/usr/include" \
 +        "TCLLIB = -L/usr/lib64" \
  	"TCLLDFLAGS = -ltcl8.5 -ldl" \
 -	"NETCDFLDFLAGS = -lnetcdf " \
-+	"NETCDFLDFLAGS = -LROLLNETCDF/lib" \
-+	"NETCDFINC = -IROLLMPI/include -IROLLHDF5/include -IROLLNETCDF/include" \
-+	"NETCDFLIB = ROLLHDF5/lib/libhdf5.a ROLLHDF5/lib/libhdf5_hl.a ROLLNETCDF/lib/libnetcdf.a" \
++        "NETCDFLDFLAGS = -LROLLNETCDF/lib" \
++        "NETCDFINC = -IROLLMPI/include -IROLLHDF5/include -IROLLNETCDF/include" \
++        "NETCDFLIB = ROLLHDF5/lib/libhdf5.a ROLLHDF5/lib/libhdf5_hl.a ROLLNETCDF/lib/libnetcdf.a" \
  	"AR = ar" \
  	"NM = nm -p" \
  	"RANLIB = touch" \

@@ -13,8 +13,8 @@ ifndef ROLLPY
 endif
 
 NAME            = sdsc-vmd
-VERSION         = 1.9.3
-RELEASE         = 6
+VERSION         = 1.9.4a38
+RELEASE         = 0
 PKGROOT         = /opt/vmd
 
 SRC_SUBDIR      = vmd
