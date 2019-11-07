@@ -5,6 +5,9 @@
 This roll bundles the Visual Molecular Dynamics package.  For more information
 about the package, please visit the <a href="http://www.ks.uiuc.edu/Research/vmd">official web page</a>.
 
+**NOTE: Starting with version 1.9.4 vmd uses Python 3.x in order to use the latest
+  numpy which _requires_ the use of Python 3.x.**
+
 ## Requirements
 
 To build/install this roll you must have root access to a Rocks development
@@ -24,7 +27,7 @@ depends on make include files provided by that roll.
 The roll sources assume that modulefiles provided by SDSC compiler, python,
 and MPI
 rolls are available, but it will build without them as long as the environment
-variables they provide are otherwise defined. Note that as of vmd 1.9.4, vmd uses python 3 in order to use the latest numpy.
+variables they provide are otherwise defined.
 
 The build process requires cmake and the NETCDF and HDF5 libraries and
 assumes that the modulefiles provided by the SDSC cmake-roll, netcdf-roll and
@@ -100,5 +103,5 @@ installation of the roll documentation, binaries and module files. To
 run the test scripts execute the following command(s):
 
 ```shell
-% /root/rolltests/vmd.t 
+% /root/rolltests/vmd.t
 ```
