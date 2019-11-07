@@ -24,7 +24,7 @@ depends on make include files provided by that roll.
 The roll sources assume that modulefiles provided by SDSC compiler, python,
 and MPI
 rolls are available, but it will build without them as long as the environment
-variables they provide are otherwise defined.
+variables they provide are otherwise defined. Note that as of vmd 1.9.4, vmd uses python 3 in order to use the latest numpy.
 
 The build process requires cmake and the NETCDF and HDF5 libraries and
 assumes that the modulefiles provided by the SDSC cmake-roll, netcdf-roll and
