@@ -5,6 +5,9 @@
 This roll bundles the Visual Molecular Dynamics package.  For more information
 about the package, please visit the <a href="http://www.ks.uiuc.edu/Research/vmd">official web page</a>.
 
+**NOTE: Starting with version 1.9.4 vmd uses Python 3.x in order to use the latest
+  numpy which _requires_ the use of Python 3.x.**
+
 ## Requirements
 
 To build/install this roll you must have root access to a Rocks development
@@ -100,5 +103,5 @@ installation of the roll documentation, binaries and module files. To
 run the test scripts execute the following command(s):
 
 ```shell
-% /root/rolltests/vmd.t 
+% /root/rolltests/vmd.t
 ```

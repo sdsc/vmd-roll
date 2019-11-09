@@ -118,10 +118,11 @@ build: $(SRC_DIRS)
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  $(MODULE_LOAD_NETCDF); \
-          python_version=`python -c "from __future__ import print_function;import sys; print(sys.version[:3])"`; \
-          numpy_version=`python -c "import numpy; print numpy.__version__"`; \
- 	  perl -pi -e 's!PYTHON_INCLUDE_DIR!'$${PYTHONROOT}'/include/python'$${python_version}'!g' $(SOURCE_DIR)/configure; \
+          python_version=`python3 -c "from __future__ import print_function;import sys; print(sys.version[:3])"`; \
+          numpy_version=`python3 -c "import numpy; print(numpy.__version__)"`; \
+ 	  perl -pi -e 's!PYTHON_INCLUDE_DIR!'$${PYTHONROOT}'/include/python'$${python_version}m'!g' $(SOURCE_DIR)/configure; \
  	  perl -pi -e 's!PYTHON_LIBRARY_DIR!'$${PYTHONROOT}'/lib!g' $(SOURCE_DIR)/configure; \
+ 	  perl -pi -e 's!PYVERSION!'$${python_version}m'!g' $(SOURCE_DIR)/configure; \
           PYTHON_INCLUDE=`find $${PYTHONROOT}/lib/python$${python_version} -name arrayobject.h | sed 's/numpy.arrayobject.h//'`; \
  	  perl -pi -e "s!NUMPY_INCLUDE_DIR!$${PYTHON_INCLUDE}!g" $(SOURCE_DIR)/configure; \
 	  cd $(TACHYON_DIR)/unix; \

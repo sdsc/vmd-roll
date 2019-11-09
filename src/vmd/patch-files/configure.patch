@@ -1,6 +1,6 @@
---- vmd-1.9.3/configure	2016-11-30 23:11:33.000000000 -0800
-+++ patch-files/configure	2018-04-17 11:46:37.295329598 -0700
-@@ -459,7 +459,7 @@
+--- vmd-1.9.4a38/configure	2019-10-17 09:11:20.000000000 -0700
++++ patch-files/configure	2019-11-06 12:26:16.096461975 -0800
+@@ -476,7 +476,7 @@
  $arch_echo        = "echo";
  $arch_tar         = "tar";
  $arch_compress    = "compress";
@@ -9,7 +9,7 @@
  $arch_latex       = "latex";
  $arch_compilerc   = $arch_echo;
  $arch_rcflags     = "No resource compiler required on this platform.";
-@@ -668,8 +668,8 @@
+@@ -706,8 +706,8 @@
  $fltk_defines     = "-DVMDGUI -DVMDFLTK";
  $fltk_dir         = "$vmd_library_dir/fltk";
  $fltk_include     = "-I$fltk_dir/include";
@@ -20,7 +20,7 @@
  #@fltk_cc          = ('forms_ui.c');
  @fltk_cu          = ();
  @fltk_ccpp        = ( 'ColorFltkMenu.C',
-@@ -1106,7 +1106,7 @@
+@@ -1172,7 +1172,7 @@
  $libtachyon_defines     = "-DVMDLIBTACHYON";
  $libtachyon_dir         = "$vmd_library_dir/tachyon";
  $libtachyon_include     = "-I$libtachyon_dir/include";
@@ -29,7 +29,7 @@
  $libtachyon_libs        = "-ltachyon";
  @libtachyon_cc          = ();
  @libtachyon_cu          = ();
-@@ -1311,7 +1311,7 @@
+@@ -1395,7 +1395,7 @@
  $actc_defines     = "-DVMDACTC";
  $actc_dir         = "$vmd_library_dir/actc";
  $actc_include     = "-I$actc_dir/include";
@@ -38,7 +38,7 @@
  $actc_libs        = "-lactc";
  @actc_cc          = ();
  @actc_cu          = ();
-@@ -1324,10 +1324,11 @@
+@@ -1408,10 +1408,11 @@
  # OPTIONAL COMPONENT: NetCDF I/O Library (Used by cdfplugin)
  #######################
  $netcdf_defines     = "";
@@ -54,7 +54,7 @@
  @netcdf_cc          = ();
  @netcdf_cu          = ();
  @netcdf_ccpp        = ();
-@@ -1386,9 +1387,9 @@
+@@ -1470,9 +1471,9 @@
  $stock_numpy_library_dir=$ENV{"NUMPY_LIBRARY_DIR"} || "$vmd_library_dir/python/lib_$config_arch/lib/python2.5/site-packages/numpy/core/include";
  
  $python_defines     = "-DVMDPYTHON";
@@ -63,11 +63,11 @@
 -$python_libs        = "-lpython2.5 -lpthread";
 +$python_include     = "-IPYTHON_INCLUDE_DIR -INUMPY_INCLUDE_DIR";
 +$python_library     = "-LPYTHON_LIBRARY_DIR";
-+$python_libs        = "-lpython2.7 -lpthread";
++$python_libs        = "-lpythonPYVERSION -lpthread";
  @python_h           = ('PythonTextInterp.h',
                         'VMDTkinterMenu.h',
  		       'py_commands.h',
-@@ -1933,7 +1934,7 @@
+@@ -2029,7 +2030,7 @@
    $arch_lex         = "flex";  # has problems with the vendor lex... 
  
    # also needed for plugins

@@ -1,11 +1,11 @@
 --- fltk-1.3.4-1/Makefile	2016-09-30 04:33:14.000000000 -0700
-+++ patch-files/fltk/Makefile	2017-04-19 17:06:33.000000000 -0700
++++ patch-files/fltk/Makefile	2019-11-06 12:40:03.933695474 -0800
 @@ -86,7 +86,7 @@
  		./config.status --recheck; \
  		./config.status; \
  	else \
 -		./configure; \
-+ 		./configure --prefix=ROLLINSTALL; \
++		./configure --prefix=ROLLINSTALL; \
  	fi
  	touch config.h
  	chmod +x fltk-config

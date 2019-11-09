@@ -1,9 +1,9 @@
---- vmd-1.9.3/src/Makefile	2018-03-09 17:09:10.560083273 -0800
-+++ patch-files/src/Makefile	2018-03-09 17:10:42.422048480 -0800
-@@ -546,7 +546,7 @@
- 	if [ ! -r ./foobar ]; then \
- 	  ln -s ../src/foobar ./foobar ; \
- 	fi; \
+--- vmd-1.9.4a38/src/Makefile	2019-10-17 09:11:22.000000000 -0700
++++ patch-files/src/Makefile	2019-11-06 13:10:19.152066222 -0800
+@@ -645,7 +645,7 @@
+ vmd_LINUXAMD64: y.tab.h $(VMD_OBJS) $(VMD_PTX)
+ 	$(ECHO) "Linking " $@ "..."; \
+ 	$(CD) ../LINUXAMD64 ; \
 -	$(CCPP) $(CPPFLAGS) -I../src -o $@ $(VMD_OBJS) $(LOADLIBES) ; 
 +	mpicxx $(CPPFLAGS) -I../src -o $@ $(VMD_OBJS) $(LOADLIBES) ; 
  	$(COMPILERC) $(RCFLAGS)
